@@ -1,0 +1,4 @@
+An implementation of Perl 6's Form module, as described by Exegesis 7 and Damian Conway's Perl6::Form module.
+
+This is a WORK IN PROGRESS and most likely doesn't work at any given time.
+
