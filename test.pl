@@ -1,4 +1,4 @@
-#!/home/matthew/Compiling/rakudo/perl6
+#!perl6
 use v6;
 
 use Form;
