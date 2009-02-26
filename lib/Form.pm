@@ -10,11 +10,6 @@ grammar Format {
 	}
 
 	regex field {
-		'['+
-	}
-
-=begin comment
-	regex field {
 		<bottom_aligned_field> | <centre_aligned_field> | <aligned_field>
 	}
 
@@ -39,7 +34,7 @@ grammar Format {
 	}
 
 	regex left_justified_line_field {
-		']'+
+		'<'+
 	}
 
 	regex centred_field {
@@ -77,7 +72,6 @@ grammar Format {
 	regex justified_line_field {
 		'<'+ '>'+
 	}
-=end comment
 }
 
 =begin comment
