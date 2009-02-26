@@ -74,7 +74,6 @@ grammar Format {
 	}
 }
 
-=begin comment
 class Picture {
 	# @.elements is Str|Field when Rakudo supports that
 	has @.elements;
@@ -87,20 +86,17 @@ class Literal {
 role Field {
 	has Bool $.block;
 	has Int $.width;
-	# RAKUDO: no enums yet?
 	has $.alignment;
 	has $.data;
 }
 
 class TextField does Field {
-	# RAKUDO: no enums yet?
 	has $.justify;
 }
 
 class VerbatimField does Field {
 }
 
-=end comment
 
 
 sub form(*@args) returns Str is export {
