@@ -90,11 +90,15 @@ role Field {
 	has $.data;
 }
 
-class TextField does Field {
+# RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
+#         we need to write "Form::Field", not "Field".
+class TextField does Form::Field {
 	has $.justify;
 }
 
-class VerbatimField does Field {
+# RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
+#         we need to write "Form::Field", not "Field".
+class VerbatimField does Form::Field {
 }
 
 
