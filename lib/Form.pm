@@ -90,11 +90,11 @@ role Field {
 	has $.data;
 }
 
-class TextField does Field {
+class TextField does Form::Field {
 	has $.justify;
 }
 
-class VerbatimField does Field {
+class VerbatimField does Form::Field {
 }
 
 
