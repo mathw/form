@@ -2,3 +2,23 @@ An implementation of Perl 6's Form module, as described by Exegesis 7 and Damian
 
 This is a WORK IN PROGRESS and most likely doesn't work at any given time.
 
+TODO
+====
+
+* Actions for grammar for fields currently defined
+* Code to format data into those field types
+* Hook it all up to sub form() so that those fields can be used
+* Extend parser to handle mixed literal/field content in picture strings
+* Numeric fields with decimal separator and justification
+* Numeric fields with thousands separators and justification
+* Currencies
+* Everything else
+
+
+Also:
+
+* Script to run test suite with
+
+
+
+Licensed under the Artistic Licence 2.0
