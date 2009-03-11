@@ -132,19 +132,21 @@ class FormActions {
 	method right_justified_block_field($m) {
 		say "Right justified block field";
 		make TextField.new(
-			:justify(Justify::right),
-			:block(Bool::True),
+			:justify(right),
+			:block(True),
 			:width((~$m).chars)
 		);
 	}
 
 	method left_justified_block_field($m) {
 		say "Left justified block field";
-		make TextField.new(
-			:justify(Justify::left),
+		my $x = Form::TextField.new(
+			:justify(left),
 			:block(Bool::True),
 			:width((~$m).chars)
 		);
+		say $x.WHAT;
+		make $x;
 	}
 	
 	method right_justified_field($m) {
