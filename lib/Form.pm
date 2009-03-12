@@ -10,8 +10,9 @@ grammar Format {
 	}
 
 	regex field {
-		<bottom_aligned_field> | <centre_aligned_field> | <aligned_field>
-		{*}
+		  <bottom_aligned_field> {*} #= bottom_aligned_field
+		| <centre_aligned_field> {*} #= centre_aligned_field
+		| <top_aligned_field>    {*} #= top_aligned_field
 	}
 
 	regex bottom_aligned_field {
@@ -24,13 +25,21 @@ grammar Format {
 		{*}
 	}
 
-	regex aligned_field {
-		<left_justified_field> | <centred_field> | <right_justified_field> | <fully_justified_field>
+	regex top_aligned_field {
+		<aligned_field>
 		{*}
 	}
 
+	regex aligned_field {
+		  <left_justified_field>  {*} #= left_justified_field
+		| <centred_field>         {*} #= centred_field
+		| <right_justified_field> {*} #= right_justified_field
+		| <fully_justified_field> {*} #= fully_justified_field
+	}
+
 	regex left_justified_field {
-		<left_justified_block_field> | <left_justified_line_field>
+		  <left_justified_block_field> {*} #= left_justified_block_field
+		| <left_justified_line_field>  {*} #= left_justified_line_field
 		{*}
 	}
 
@@ -60,8 +69,8 @@ grammar Format {
 	}
 
 	regex right_justified_field {
-		<right_justified_block_field> | <right_justified_line_field>
-		{*}
+		  <right_justified_block_field> {*} #= right_justified_block_field
+		| <right_justified_line_field>  {*} #= right_justified_line_field
 	}
 
 	regex right_justified_block_field {
@@ -92,24 +101,24 @@ grammar Format {
 
 class Picture {
 	# @.elements is Str|Field when Rakudo supports that
-	has @.elements;
+	has @.elements is rw;
 }
 
 class Literal {
-	has Str $.content;
+	has Str $.content is rw;
 }
 
 role Field {
-	has Bool $.block;
-	has Int $.width;
-	has $.alignment;
-	has $.data;
+	has Bool $.block is rw;
+	has Int $.width is rw;
+	has $.alignment is rw;
+	has $.data is rw;
 }
 
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
 #         we need to write "Form::Field", not "Field".
 class TextField does Form::Field {
-	has $.justify;
+	has $.justify is rw;
 }
 
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
@@ -131,59 +140,66 @@ class FormActions {
 
 	method right_justified_block_field($/) {
 		say "Right justified block field";
-		make TextField.new(
+		make Form::TextField.new(
 			:justify(right),
-			:block(True),
+			:block(Bool::True),
 			:width((~$/).chars)
 		);
 	}
 
 	method left_justified_block_field($/) {
 		say "Left justified block field";
-		my $x = Form::TextField.new(
+		make Form::TextField.new(
 			:justify(left),
 			:block(Bool::True),
 			:width((~$/).chars)
 		);
-		say $x.WHAT;
-		make $x;
 	}
 	
-	method right_justified_field($/) {
+	method right_justified_field($/, $sub) {
 		say "right justified field";
-		make $/;
+		make $( $/{$sub} );
 	}
 
-	method aligned_field($/) {
-		say "aligned field";
-		make $/;
+	method left_justified_field($/, $sub) {
+		say "left justified field ($sub)";
+		make $( $/{$sub} );
+	}
+
+	method aligned_field($/, $sub) {
+		say "aligned field ($sub)";
+		make $( $/{$sub} );
 	}
 
 	method centre_aligned_field($/) {
 		say "centre aligned field";
-		$($/).alignment = Alignment::centre;
+		my $f = $( $/<aligned_field> );
+		$f.alignment = Alignment::centre;
+		make $f;
 	}
 
 	method bottom_aligned_field($/) {
 		say "bottom aligned field";
-		my $f = $($/);
+		my $f = $($/<aligned_field>);
 		$f.alignment = Alignment::bottom;
 		make $f;
 	}
 
 	method top_aligned_field($/) {
 		say "top aligned field";
-		my $f = $($/);
+		my $f = $( $/<aligned_field> );
 		$f.alignment = Alignment::top;
 		make $f;
 	}
 
-	method field($/) {
+	method field($/, $sub) {
 		say "field";
+		make $( $/{$sub} );
 	}
 
 	method TOP($/) {
 		say "TOP";
+		make $( $/<field> );
 	}
 }
 
