@@ -129,62 +129,61 @@ RAKUDO: This is temporary until Rakudo supports calling make from a closure in t
 =end pod
 class FormActions {
 
-	method right_justified_block_field($m) {
+	method right_justified_block_field($/) {
 		say "Right justified block field";
 		make TextField.new(
 			:justify(right),
 			:block(True),
-			:width((~$m).chars)
+			:width((~$/).chars)
 		);
 	}
 
-	method left_justified_block_field($m) {
+	method left_justified_block_field($/) {
 		say "Left justified block field";
 		my $x = Form::TextField.new(
 			:justify(left),
 			:block(Bool::True),
-			:width((~$m).chars)
+			:width((~$/).chars)
 		);
 		say $x.WHAT;
 		make $x;
 	}
 	
-	method right_justified_field($m) {
+	method right_justified_field($/) {
 		say "right justified field";
-		make $m;
+		make $/;
 	}
 
-	method aligned_field($m) {
+	method aligned_field($/) {
 		say "aligned field";
-		make $m;
+		make $/;
 	}
 
-	method centre_aligned_field($m) {
+	method centre_aligned_field($/) {
 		say "centre aligned field";
-		$m.alignment = Alignment::centre;
-		make $m;
+		$($/).alignment = Alignment::centre;
 	}
 
-	method bottom_aligned_field($m) {
+	method bottom_aligned_field($/) {
 		say "bottom aligned field";
-		$m.alignment = Alignment::bottom;
-		make $m;
+		my $f = $($/);
+		$f.alignment = Alignment::bottom;
+		make $f;
 	}
 
-	method top_aligned_field($m) {
+	method top_aligned_field($/) {
 		say "top aligned field";
-		$m.alignment = Alignment::top;
-		make $m;
+		my $f = $($/);
+		$f.alignment = Alignment::top;
+		make $f;
 	}
 
-	method field($m) {
+	method field($/) {
 		say "field";
-		make $m;
 	}
 
-	method TOP($m) {
+	method TOP($/) {
 		say "TOP";
-		make $m;
 	}
 }
 
