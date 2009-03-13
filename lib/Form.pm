@@ -205,7 +205,52 @@ class FormActions {
 
 
 
-sub form(*@args) returns Str is export {
+=begin pod
+
+=head2 Formatting functions
+
+Utility functions for doing some of the actual string-chomping.
+
+=end pod
+
+
+=begin comment
+
+sub fill_line(TextField $field, Str $data) returns Str {
+	# How much can we fit into one line of this field?
+	my $line_content;
+	my $remainder;
+
+	if $field.width >= $data {
+		($line_content, $remainder) = break_at_word_boundary($data, $field.width);
+	}
+	else {
+		$line_content = $data;
+	}
+}
+
+sub break_at_word_boundary(Str $this, Int $width) {
+	# maximum possible we can take...
+	my $max = $this.substr(0, $width);
+
+	if $this.substr($width, 1) ~~ /\s/ {
+		# Well, that was easy...
+		return ($max, $this.substr($width, 1).trim);
+	}
+
+	my $last_space = $this.find_last_of(' ');
+}
+
+=end comment
+
+multi sub rindex(Str $haystack, Str $needle) {
+	my $where = $haystack.reverse.index($needle);
+	defined $where and $where = $haystack.chars - $where - 1;
+	return $where;
+}
+
+
+sub form(*@args is Scalar) returns Str is export {
 	my @lines;
 
 	return '';
