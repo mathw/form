@@ -15,10 +15,28 @@ TODO
 * Everything else
 
 
-Also:
+BUILDING AND RUNNING
+====================
 
-* Script to run test suite with
+$ perl Makefile.PL
+$ make
+$ make test
 
+Makefile.PL will examine your environment to find Rakudo.
 
+If your Rakudo is configured as Parrot-inside-Rakudo (i.e. you got Rakudo
+and built it using --gen-parrot), set RAKUDO_DIR to the top level Rakudo
+directory.
+
+If your Rakudo is inside Parrot, set PARROT_DIR to the top level Parrot
+directory.
+
+If the script misdetects PARROT_DIR or RAKUDO_DIR, specifying both in the
+environment will allow you to correct that.
+
+PERL6LIB must be set (TODO: what to? './lib' seems to be the minimum, but
+something suggests we should do that ourselves)
+
+TODO (how does this stack up for Proto users? Should Just Work, I hope)
 
 Licensed under the Artistic Licence 2.0

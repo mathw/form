@@ -1,0 +1,19 @@
+RAKUDO=<RAKUDO>
+
+SOURCES=lib/Form.pm lib/Test.pm
+
+PIRS=$(SOURCES:.pm=.pir)
+
+all: $(PIRS)
+
+%.pir: %.pm
+	$(RAKUDO) --target=pir --output=$@ $<
+
+clean:
+	rm -f $(PIRS)
+
+tests: test
+
+test: all
+	prove -e '$(RAKUDO)'\
+	      -r --nocolor t/
