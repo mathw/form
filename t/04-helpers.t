@@ -6,14 +6,19 @@ use Test;
 
 use Form;
 
-plan 3;
+plan 6;
 
-my $haystack = "eeeaeaa";
-my $needle = "e";
+my $text = "The quick brown fox, jumps over the lazy dog.";
+my $fitted;
+my $remainder;
 
-my $where = Form::rindex($haystack, $needle);
-ok($where == 4, "rindex('$haystack', '$needle') == 4");
-$where = Form::rindex($haystack, 'z');
-ok(!defined($where), "rindex('$haystack', 'z') untrue");
-$where = Form::rindex($haystack, 'a');
-ok($where == 6, "rindex('$haystack', 'a') == 6");
+($fitted, $remainder) = Form::fit_in_width($text, 6);
+ok($fitted eq 'The ', "First line fitted correctly");
+ok($remainder eq 'quick brown fox, jumps over the lazy dog.', "First line remainder correct");
+($fitted, $remainder) = Form::fit_in_width($text, 20);
+ok($fitted eq 'The quick brown fox,', "Wider line fitted correctly");
+ok($remainder eq 'jumps over the lazy dog.', "Wider line remainder correct");
+($fitted, $remainder) = Form::fit_in_width($text, 2);
+ok($fitted eq 'Th', 'Partial word fill correct');
+ok($remainder eq 'e quick brown fox, jumps over the lazy dog.', 'Partial word remainder correct');
+
