@@ -1,6 +1,6 @@
 RAKUDO=<RAKUDO>
 
-SOURCES=lib/Form.pm lib/Test.pm
+SOURCES=lib/Test.pm lib/Form/Actions.pm lib/Form/Grammar.pm lib/Form/TextFormatting.pm lib/Form/Field.pm lib/Form.pm
 
 PIRS=$(SOURCES:.pm=.pir)
 
