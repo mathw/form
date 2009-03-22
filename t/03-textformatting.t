@@ -12,8 +12,8 @@ my $text = "The quick brown fox, jumps over the lazy dog.";
 my $fitted;
 my $remainder;
 
-say "Calling fit_in_width '$text', 6";
 ($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 6);
+say "'$fitted'";
 ok($fitted eq 'The', "First line fitted correctly");
 ok($remainder eq 'quick brown fox, jumps over the lazy dog.', "First line remainder correct");
 ($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 20);

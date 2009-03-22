@@ -4,8 +4,6 @@ enum Justify <left right centre full>;
 enum Alignment <top middle bottom>;
 
 sub chop_first_word(Str $source is rw) returns Str {
-	say "chop_first_word('$source')";
-
 	if $source ~~ / ^^ (\S+) \s* (.*) $$ / {
 		my $word = ~$/[0];
 		$source = ~$/[1];
@@ -17,7 +15,6 @@ sub chop_first_word(Str $source is rw) returns Str {
 }
 
 sub fit_in_width(Str $text, Int $width) returns Array of Str {
-	say "fit_in_width('$text', $width)";
 
 	my $fitted = '';
 	my $remainder = $text;
@@ -38,6 +35,7 @@ sub fit_in_width(Str $text, Int $width) returns Array of Str {
 		else {
 			# won't fit - put the word back
 			$remainder = "$word $remainder";
+			say "$remainder";
 			last;
 		}
 	}
@@ -58,9 +56,7 @@ sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
 	my $line;
 
 	my @array = gather loop {
-		say "Begin loop";
 		($line, $rem) = fit_in_width($rem, $width);
-		say "'$line' '$rem'";
 		take $line;
 		$rem or last;
 	};
@@ -69,7 +65,14 @@ sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
 }
 
 sub trim_ending_whitespace(Str $line) {
-	return $line.subst(/ <ws>+ $$ /, '');
+	# RAKUDO: this causes an infinite loop pending Perl #64094
+	#my $r = $line.subst(/ <ws>+ $$ /, '');
+	my $acc;
+	my $ws = 1;
+	if ($acc) = $line.match(/ ^^ (.*?) \s+ $$ /) {
+		return $acc;
+	}
+	return $line;
 }
 
 # vim: ft=perl6 ts=4 sw=4 noexpandtab
