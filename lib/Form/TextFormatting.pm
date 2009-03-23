@@ -35,7 +35,6 @@ sub fit_in_width(Str $text, Int $width) returns Array of Str {
 		else {
 			# won't fit - put the word back
 			$remainder = "$word $remainder";
-			say "$remainder";
 			last;
 		}
 	}
@@ -57,7 +56,11 @@ sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
 
 	my @array = gather loop {
 		($line, $rem) = fit_in_width($rem, $width);
-		take $line;
+		# we have to force a copy here or take will end up with the same value
+		# every single time! This might be a rakudo issue, or a spec issue
+		# or just expected behaviour
+		my $t = $line;
+		take $t;
 		$rem or last;
 	};
 
@@ -65,14 +68,7 @@ sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
 }
 
 sub trim_ending_whitespace(Str $line) {
-	# RAKUDO: this causes an infinite loop pending Perl #64094
-	#my $r = $line.subst(/ <ws>+ $$ /, '');
-	my $acc;
-	my $ws = 1;
-	if ($acc) = $line.match(/ ^^ (.*?) \s+ $$ /) {
-		return $acc;
-	}
-	return $line;
+	return $line.subst(/ <ws> $$ /, '');
 }
 
 # vim: ft=perl6 ts=4 sw=4 noexpandtab
