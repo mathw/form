@@ -13,7 +13,7 @@ class FormActions {
     method right_justified_line_field($/) {
 		say "Right justified line field";
 		make Form::Field::TextField.new(
-			:justify(right),
+			:justify(Form::TextFormatting::Justify::right),
 			:block(Bool::False),
 			:width((~$/).chars)
 		);
@@ -22,7 +22,7 @@ class FormActions {
 	method right_justified_block_field($/) {
 		say "Right justified block field";
 		make Form::Field::TextField.new(
-			:justify(right),
+			:justify(Form::TextFormatting::Justify::right),
 			:block(Bool::True),
 			:width((~$/).chars)
 		);
@@ -31,7 +31,7 @@ class FormActions {
     method left_justified_line_field($/) {
         say "Left justified line field";
         make Form::Field::TestField.new(
-            :justify(left),
+            :justify(Form::TextFormatting::Justify::left),
             :block(Bool::False),
             :width((~$/).chars)
         );
@@ -40,7 +40,7 @@ class FormActions {
 	method left_justified_block_field($/) {
 		say "Left justified block field";
 		make Form::Field::TextField.new(
-			:justify(left),
+			:justify(Form::TextFormatting::Justify::left),
 			:block(Bool::True),
 			:width((~$/).chars)
 		);
