@@ -15,8 +15,9 @@ my $result = Form::Grammar::Format.parse('{[[[[[}', :action($actions));
 ok($result, "Parse left block field with actions succeeds");
 
 
-my $field = $($result);
-ok($field ~~ Form::Field::TextField, "Parse returned Form::Field::TextField result object (it was a {$($field).WHAT})");
+my $fields = $result.ast;
+my $field = $fields[0];
+ok($field ~~ Form::Field::TextField, "Parse returned Form::Field::TextField result object (it was a {$field.WHAT})");
 
 ok($field.block, "Parsed left block field block state is true");
 ok($field.width == 5, "Parsed left block field width is correct");
@@ -26,7 +27,7 @@ ok($field.width == 5, "Parsed left block field width is correct");
 my $r-result = Form::Grammar::Format.parse('{>>>>>>>>}', :action($actions));
 ok($r-result, "Parse right line field with actions succeeds");
 
-my $r-field = $($r-result);
+my $r-field = $r-result.ast[0];
 ok($r-field ~~ Form::Field::TextField, "Parse returned a Form::Field::TextField result object");
 ok(!$r-field.block, "Parsed right line field object is not a block");
 ok($r-field.width == 8, "Parsed right line field width is correct");

@@ -2,8 +2,13 @@ module Form::Grammar;
 
 grammar Format {
 	regex TOP {
-		^ [ <field> | <literal> ]* $
+		^ <field_or_literal>* $
 		{*}
+	}
+
+	regex field_or_literal {
+		  <field>   {*} #= field
+		| <literal> {*} #= literal
 	}
 
 	regex literal {
