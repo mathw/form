@@ -36,14 +36,13 @@ ok($r-field.width == 8, "Parsed right line field width is correct");
 #ok($field.justify == Form::TextFormatting::Justify::right, "Parsed right line field justification is left");
 
 # Now for mixed literals, multiple fields
-my $mixed-string = '{<}';
+my $mixed-string = 'hello{[[[[} goodbye{>>}{<}';
 my $mixed-results = Form::Grammar::Format.parse($mixed-string, :action($actions));
 ok($mixed-results.ast ~~ Array, "Mixed field parse returned an array");
-for $mixed-results.ast { say .WHAT }
 ok($mixed-results.ast.elems == 5, "Mixed field parse had the correct number of elements");
 
 my $c = 1;
-for $mixed-results Z <Str TextField Str TextField TextField> -> $r, $e {
+for $mixed-results.ast Z <Str TextField Str TextField TextField> -> $r, $e {
 	ok($r.WHAT eq $e, "Mixed field section {$c++} has type $e");
 }
 
