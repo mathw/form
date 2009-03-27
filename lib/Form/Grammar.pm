@@ -51,7 +51,6 @@ grammar Format {
 	regex left_justified_field {
 		  <left_justified_block_field> {*} #= left_justified_block_field
 		| <left_justified_line_field>  {*} #= left_justified_line_field
-		{*}
 	}
 
 	regex left_justified_block_field {
