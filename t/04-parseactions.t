@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 18;
 
 use Form::Grammar;
 use Form::Actions;
@@ -35,8 +35,15 @@ ok($r-field.width == 8, "Parsed right line field width is correct");
 #ok($field.alignment == Form::TextFormatting::Alignment::top, "Parsed right line field alignment is top");
 #ok($field.justify == Form::TextFormatting::Justify::right, "Parsed right line field justification is left");
 
+$r-result = Form::Grammar::Format.parse('{<<>>}', :action($actions));
+ok($r-result, "Parse centred line field with actions succeeds");
+ok($r-result.ast[0] ~~ Form::Field::TextField, "Parse centred line field result object is TextField");
+# RAKUDO: enable when we can use enums from another module
+#ok($r-result.ast[0].justify == Form::TextFormatting::Justify::centre, "Parsed centred line field justification is centre");
+
+
 # Now for mixed literals, multiple fields
-my $mixed-string = 'hello{[[[[} goodbye{>>}{<}';
+my $mixed-string = 'hello{[[[} goodbye{>>}{><}';
 my $mixed-results = Form::Grammar::Format.parse($mixed-string, :action($actions));
 ok($mixed-results.ast ~~ Array, "Mixed field parse returned an array");
 ok($mixed-results.ast.elems == 5, "Mixed field parse had the correct number of elements");

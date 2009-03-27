@@ -94,8 +94,8 @@ grammar Format {
 	}
 
 	regex fully_justified_field {
-		<justified_block_field> | <justified_line_field>
-		{*}
+		  <justified_block_field> {*} #= justified_block_field
+		| <justified_line_field>  {*} #= justified_line_field
 	}
 
 	regex justified_block_field {

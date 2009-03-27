@@ -14,6 +14,46 @@ Class containing action methods to be associated with Form grammar defined in Fo
 =end pod
 class FormActions {
 
+	method centred_field($/, $sub) {
+		make $/{$sub}.ast;
+	}
+
+	method centred_block_field($/) {
+		make Form::Field::TextField.new(
+			:justify(Justify::centre),
+			:block(Bool::True),
+			:width((~$/).chars)
+		);
+	}
+
+	method centred_line_field($/) {
+		make Form::Field::TextField.new(
+			:justify(Justify::centre),
+			:block(Bool::False),
+			:width((~$/).chars)
+		);
+	}
+
+	method fully_justified_field($/, $sub) {
+		make $/{$sub}.ast;
+	}
+
+	method justified_line_field($/) {
+		make Form::Field::TextField.new(
+			:justify(Justify::full),
+			:block(Bool::False),
+			:width((~$/).chars)
+		);
+	}
+
+	method justified_block_field($/) {
+		make Form::Field::TextField.new(
+			:justify(Justify::full),
+			:block(Bool::True),
+			:width((~$/).chars)
+		);
+	}
+
     method right_justified_line_field($/) {
 		#say "Right justified line field";
 		make Form::Field::TextField.new(
