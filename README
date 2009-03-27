@@ -8,7 +8,6 @@ TODO
 * Actions for grammar for fields currently defined
 * Code to format data into those field types
 * Hook it all up to sub form() so that those fields can be used
-* Extend parser to handle mixed literal/field content in picture strings
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
 * Currencies

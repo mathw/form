@@ -1,14 +1,5 @@
 module Form::Field;
 
-class Picture {
-	# @.elements is Str|Field when Rakudo supports that
-	has @.elements is rw;
-}
-
-class Literal {
-	has Str $.content is rw;
-}
-
 role Field {
 	has Bool $.block is rw;
 	has Int $.width is rw;

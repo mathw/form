@@ -12,7 +12,7 @@ grammar Format {
 	}
 
 	regex literal {
-		<!before '{'> .+
+		<-[{]>+
 		{*}
 	}
 
@@ -65,8 +65,8 @@ grammar Format {
 	}
 
 	regex centred_field {
-		<centred_block_field> | <centred_line_field>
-		{*}
+		  <centred_block_field> {*} #= centred_block_field
+		| <centred_line_field>  {*} #= centred_line_field
 	}
 
 	regex centred_block_field {

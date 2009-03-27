@@ -33,7 +33,7 @@ class FormActions {
 	}
 
     method left_justified_line_field($/) {
-        #say "Left justified line field";
+        say "Left justified line field";
         make Form::Field::TextField.new(
             :justify(Justify::left),
             :block(Bool::False),
@@ -42,7 +42,7 @@ class FormActions {
     }
 
 	method left_justified_block_field($/) {
-		#say "Left justified block field";
+		say "Left justified block field";
 		make Form::Field::TextField.new(
 			:justify(Justify::left),
 			:block(Bool::True),
@@ -51,17 +51,17 @@ class FormActions {
 	}
 	
 	method right_justified_field($/, $sub) {
-		#say "right justified field";
+		say "right justified field";
 		make $/{$sub}.ast;
 	}
 
 	method left_justified_field($/, $sub) {
-		#say "left justified field ($sub)";
+		say "left justified field ($sub)";
 		make $/{$sub}.ast;
 	}
 
 	method aligned_field($/, $sub) {
-		#say "aligned field ($sub)";
+		say "aligned field ($sub)";
 		make $/{$sub}.ast;
 	}
 
@@ -80,20 +80,24 @@ class FormActions {
 	}
 
 	method top_aligned_field($/) {
-		#say "top aligned field";
+		say "top aligned field";
 		my $f = $/<aligned_field>.ast;
 		$f.alignment = Alignment::top;
 		make $f;
 	}
 
 	method field($/, $sub) {
-		#say "field $sub";
+		say "field $sub";
 		make $/{$sub}.ast;
 	}
 
 	method field_or_literal($/, $sub) {
-		#say $/{$sub}.ast.WHAT;
+		say $/{$sub}.ast.WHAT;
 		make $/{$sub}.ast;
+	}
+
+	method literal($/) {
+		make ~$/;
 	}
 
 	method TOP($/) {
