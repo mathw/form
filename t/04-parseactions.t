@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 22;
 
 use Form::Grammar;
 use Form::Actions;
@@ -38,8 +38,17 @@ ok($r-field.width == 8, "Parsed right line field width is correct");
 $r-result = Form::Grammar::Format.parse('{<<>>}', :action($actions));
 ok($r-result, "Parse centred line field with actions succeeds");
 ok($r-result.ast[0] ~~ Form::Field::TextField, "Parse centred line field result object is TextField");
+ok($r-result.ast[0].width == 4, "Parsed centred line field has correct width");
 # RAKUDO: enable when we can use enums from another module
 #ok($r-result.ast[0].justify == Form::TextFormatting::Justify::centre, "Parsed centred line field justification is centre");
+
+$r-result = Form::Grammar::Format.parse('{]]][[}', :action($actions));
+ok($r-result, "Parse justified line field with actions succeeds");
+ok($r-result.ast[0] ~~ Form::Field::TextField, "Parse justified line field result object is TextField");
+ok($r-result.ast[0].width == 5, "Parsed justified line field has correct width");
+# RAKUDO: enable when we can use enums from another module
+#ok($r-result.ast[0].justify == Form::TextFormatting::Justify::full, "Parsed centred line field justification is centre");
+
 
 
 # Now for mixed literals, multiple fields
