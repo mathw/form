@@ -6,14 +6,13 @@ use Test;
 
 use Form::TextFormatting;
 
-plan 8;
+plan 15;
 
 my $text = "The quick brown fox, jumps over the lazy dog.";
 my $fitted;
 my $remainder;
 
 ($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 6);
-say "'$fitted'";
 ok($fitted eq 'The', "First line fitted correctly");
 ok($remainder eq 'quick brown fox, jumps over the lazy dog.', "First line remainder correct");
 ($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 20);
@@ -31,3 +30,18 @@ my @expected = <The quick brown fox, jumps over the lazy dog.>;
 ok(@lines.elems == 9, "Correct number of lines.");
 my $lines_correct = all(map -> $g, $e { $g eq $e }, (@lines Z @expected)) == 1;
 ok($lines_correct, "Lines were correct");
+
+# justification checks
+my $str = "ABCD";
+ok(Form::TextFormatting::left-justify($str, $str.chars) eq $str, "left-justify to string width causes no change");
+ok(Form::TextFormatting::right-justify($str, $str.chars) eq $str, "right-justify to string width causes no change");
+ok(Form::TextFormatting::centre-justify($str, $str.chars) eq $str, "centre-justify to string width causes no change");
+
+ok(Form::TextFormatting::left-justify($str, 6) eq "ABCD  ", "left-justify correct");
+ok(Form::TextFormatting::right-justify($str, 6) eq "  ABCD", "right-justify correct");
+ok(Form::TextFormatting::centre-justify($str, 6) eq " ABCD ", "centre-justify correct");
+ok(Form::TextFormatting::centre-justify($str, 7) eq " ABCD  ", "uneven centre-justify correct");
+
+
+# vim: ft=perl6 sw=4 ts=4 noexpandtab
+

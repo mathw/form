@@ -1,5 +1,14 @@
 module Form::TextFormatting;
 
+
+=begin pod
+
+=head1 Form::TextFormatting
+
+Utility functions for formatting text in Form.pm.
+
+=end pod
+
 enum Justify <left right centre full>;
 enum Alignment <top middle bottom>;
 
@@ -69,6 +78,33 @@ sub unjustified_wrap(Str $text, Int $width) #{returns Array of Str} {
 
 sub trim_ending_whitespace(Str $line) returns Str {
 	return $line.subst(/ <ws> $$ /, '');
+}
+
+sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+	if $line.chars < $width {
+		return $line ~ ($space x ($width - $line.chars));
+	}
+
+	return $line.substr(0, $width);
+}
+
+sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+	if $line.chars < $width {
+		return ($space x ($width - $line.chars)) ~ $line;
+	}
+
+	return $line.substr(0, $width);
+}
+
+sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+	if $line.chars < $width {
+		my Int $to-add = $width - $line.chars;
+		my Int $before = int($to-add / 2);
+		my Int $after = $before + $to-add % 2;
+		return ($space x $before) ~ $line ~ ($space x $after);
+	}
+
+	return $line.substr(0, $width);
 }
 
 # vim: ft=perl6 ts=4 sw=4 noexpandtab
