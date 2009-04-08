@@ -14,11 +14,11 @@ sub chop_first_word(Str $source is rw) returns Str {
 	}
 }
 
-sub fit_in_width(Str $text, Int $width) returns Array of Str {
+sub fit_in_width(Str $text, Int $width) #{returns Array of Str} {
 
-	my $fitted = '';
-	my $remainder = $text;
-	my $word;
+	my Str $fitted = '';
+	my Str $remainder = $text;
+	my Str $word;
 	
 	while $word = chop_first_word($remainder) {
 		if $fitted.chars + $word.chars <= $width {
@@ -50,7 +50,7 @@ sub fit_in_width(Str $text, Int $width) returns Array of Str {
 }
 
 
-sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
+sub unjustified_wrap(Str $text, Int $width) #{returns Array of Str} {
 	my $rem = $text;
 	my $line;
 
@@ -67,7 +67,7 @@ sub unjustified_wrap(Str $text, Int $width) returns Array of Str {
 	return @array;
 }
 
-sub trim_ending_whitespace(Str $line) {
+sub trim_ending_whitespace(Str $line) returns Str {
 	return $line.subst(/ <ws> $$ /, '');
 }
 
