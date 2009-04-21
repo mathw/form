@@ -6,7 +6,7 @@ use Test;
 
 use Form::TextFormatting;
 
-plan 15;
+plan 19;
 
 my $text = "The quick brown fox, jumps over the lazy dog.";
 my $fitted;
@@ -42,6 +42,10 @@ ok(Form::TextFormatting::right-justify($str, 6) eq "  ABCD", "right-justify corr
 ok(Form::TextFormatting::centre-justify($str, 6) eq " ABCD ", "centre-justify correct");
 ok(Form::TextFormatting::centre-justify($str, 7) eq " ABCD  ", "uneven centre-justify correct");
 
+ok(Form::TextFormatting::full-justify($str, 6) eq "ABCD  ", "fully justify with no words correct");
+ok(Form::TextFormatting::full-justify("A B", 6) eq "A    B", "fully justify with two words correct");
+ok(Form::TextFormatting::full-justify("A B C", 9) eq "A   B   C", "fully justify with three words correct");
+ok(Form::TextFormatting::full-justify("A B C", 10) eq "A    B   C", "fully justify with three words uneven correct");
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
 

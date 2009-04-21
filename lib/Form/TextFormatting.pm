@@ -82,7 +82,7 @@ sub trim_ending_whitespace(Str $line) returns Str {
 
 sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
-		return $line ~ ($space x ($width - $line.chars));
+		return $line ~ (($space x ($width - $line.chars) / $space.chars));
 	}
 
 	return $line.substr(0, $width);
@@ -90,7 +90,7 @@ sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 
 sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
-		return ($space x ($width - $line.chars)) ~ $line;
+		return ($space x (($width - $line.chars) / $space.chars)) ~ $line;
 	}
 
 	return $line.substr(0, $width);
@@ -101,7 +101,35 @@ sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 		my Int $to-add = $width - $line.chars;
 		my Int $before = int($to-add / 2);
 		my Int $after = $before + $to-add % 2;
+		$before /= $space.chars;
+		$after /= $space.chars;
 		return ($space x $before) ~ $line ~ ($space x $after);
+	}
+
+	return $line.substr(0, $width);
+}
+
+sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+	# TODO need a justify algorithm
+	# for now, do something entirely unsatisfactory
+	if $line.chars < $width {
+		my Str @words = $line.comb;
+		my $to-add = $width - $line.chars;
+		my $words = @words.elems;
+		my @spaces = $space xx ($words - 1);
+		my $words-width = [+] @words.map({ .chars });
+		my $spaces-width = [+] @spaces.map({ .chars });
+		my $act-space = 0;
+		while $words-width + $spaces-width < $width
+		{
+			@spaces[$act-space++] ~= $space;
+			$spaces-width = [+] @spaces.map({ .chars });
+			$act-space >= @spaces.elems and $act-space = 0;
+		}
+
+		@spaces.push('');
+
+		return [~] (@words Z @spaces);
 	}
 
 	return $line.substr(0, $width);
