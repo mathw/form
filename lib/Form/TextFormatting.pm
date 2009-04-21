@@ -12,7 +12,7 @@ Utility functions for formatting text in Form.pm.
 enum Justify <left right centre full>;
 enum Alignment <top middle bottom>;
 
-sub chop_first_word(Str $source is rw) returns Str {
+sub chop-first-word(Str $source is rw) returns Str {
 	if $source ~~ / ^^ (\S+) \s* (.*) $$ / {
 		my $word = ~$/[0];
 		$source = ~$/[1];
@@ -23,13 +23,13 @@ sub chop_first_word(Str $source is rw) returns Str {
 	}
 }
 
-sub fit_in_width(Str $text, Int $width) #{returns Array of Str} {
+sub fit-in-width(Str $text, Int $width) #{returns Array of Str} {
 
 	my Str $fitted = '';
 	my Str $remainder = $text;
 	my Str $word;
 	
-	while $word = chop_first_word($remainder) {
+	while $word = chop-first-word($remainder) {
 		if $fitted.chars + $word.chars <= $width {
 			$fitted ~= $word;
 			if $fitted.chars < $width {
@@ -55,16 +55,16 @@ sub fit_in_width(Str $text, Int $width) #{returns Array of Str} {
 		$remainder.=substr($width);
 	}
 
-	return (trim_ending_whitespace($fitted), $remainder);
+	return (trim-ending-whitespace($fitted), $remainder);
 }
 
 
-sub unjustified_wrap(Str $text, Int $width) #{returns Array of Str} {
+sub unjustified-wrap(Str $text, Int $width) #{returns Array of Str} {
 	my $rem = $text;
 	my $line;
 
 	my @array = gather loop {
-		($line, $rem) = fit_in_width($rem, $width);
+		($line, $rem) = fit-in-width($rem, $width);
 		# we have to force a copy here or take will end up with the same value
 		# every single time! This might be a rakudo issue, or a spec issue
 		# or just expected behaviour
@@ -76,7 +76,7 @@ sub unjustified_wrap(Str $text, Int $width) #{returns Array of Str} {
 	return @array;
 }
 
-sub trim_ending_whitespace(Str $line) returns Str {
+sub trim-ending-whitespace(Str $line) returns Str {
 	return $line.subst(/ <ws> $$ /, '');
 }
 

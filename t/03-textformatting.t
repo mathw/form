@@ -12,19 +12,19 @@ my $text = "The quick brown fox, jumps over the lazy dog.";
 my $fitted;
 my $remainder;
 
-($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 6);
+($fitted, $remainder) = Form::TextFormatting::fit-in-width($text, 6);
 ok($fitted eq 'The', "First line fitted correctly");
 ok($remainder eq 'quick brown fox, jumps over the lazy dog.', "First line remainder correct");
-($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 20);
+($fitted, $remainder) = Form::TextFormatting::fit-in-width($text, 20);
 ok($fitted eq 'The quick brown fox,', "Wider line fitted correctly");
 ok($remainder eq 'jumps over the lazy dog.', "Wider line remainder correct");
-($fitted, $remainder) = Form::TextFormatting::fit_in_width($text, 2);
+($fitted, $remainder) = Form::TextFormatting::fit-in-width($text, 2);
 ok($fitted eq 'Th', 'Partial word fill correct');
 ok($remainder eq 'e quick brown fox, jumps over the lazy dog.', 'Partial word remainder correct');
 
 
 # now wrapping whole sets of lines
-my @lines = Form::TextFormatting::unjustified_wrap($text, 6);
+my @lines = Form::TextFormatting::unjustified-wrap($text, 6);
 # okay, we should have...
 my @expected = <The quick brown fox, jumps over the lazy dog.>;
 ok(@lines.elems == 9, "Correct number of lines.");
