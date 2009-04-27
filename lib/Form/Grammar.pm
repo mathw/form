@@ -69,13 +69,13 @@ grammar Format {
 	}
 
 	regex centred_block_field {
-		']'+ '['+
-		{*}
+		  [ ']'+ '['+ ] {*}
+		| [ 'I'+ ] {*}
 	}
 
 	regex centred_line_field {
-		'>'+ '<'+
-		{*}
+		  [ '>'+ '<'+ ] {*}
+		| [ '|'+ ] {*}
 	}
 
 	regex right_justified_field {

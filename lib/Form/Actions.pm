@@ -3,8 +3,8 @@ module Form::Actions;
 use Form::Field;
 
 # RAKUDO: temporary workaround, Rakudo can't handle enums from other modules yet.
-enum Justify <left right centre full>;
-enum Alignment <top middle bottom>;
+#enum Justify <left right centre full>;
+#enum Alignment <top middle bottom>;
 
 =begin pod
 =head3 FormActions
@@ -73,7 +73,7 @@ class FormActions {
 	}
 
     method left_justified_line_field($/) {
-        say "Left justified line field";
+        #say "Left justified line field";
         make Form::Field::TextField.new(
             :justify(Justify::left),
             :block(Bool::False),
@@ -82,7 +82,7 @@ class FormActions {
     }
 
 	method left_justified_block_field($/) {
-		say "Left justified block field";
+		#say "Left justified block field";
 		make Form::Field::TextField.new(
 			:justify(Justify::left),
 			:block(Bool::True),
@@ -91,17 +91,17 @@ class FormActions {
 	}
 	
 	method right_justified_field($/, $sub) {
-		say "right justified field";
+		#say "right justified field";
 		make $/{$sub}.ast;
 	}
 
 	method left_justified_field($/, $sub) {
-		say "left justified field ($sub)";
+		#say "left justified field ($sub)";
 		make $/{$sub}.ast;
 	}
 
 	method aligned_field($/, $sub) {
-		say "aligned field ($sub)";
+		#say "aligned field ($sub)";
 		make $/{$sub}.ast;
 	}
 
@@ -120,19 +120,18 @@ class FormActions {
 	}
 
 	method top_aligned_field($/) {
-		say "top aligned field";
+		#say "top aligned field";
 		my $f = $/<aligned_field>.ast;
 		$f.alignment = Alignment::top;
 		make $f;
 	}
 
 	method field($/, $sub) {
-		say "field $sub";
+		#say "field $sub";
 		make $/{$sub}.ast;
 	}
 
 	method field_or_literal($/, $sub) {
-		say $/{$sub}.ast.WHAT;
 		make $/{$sub}.ast;
 	}
 
@@ -157,5 +156,12 @@ class FormActions {
 	}
 }
 
+
+=begin pod
+=item count-fields
+
+Counts the number of fields in a list returned from the grammar actions
+
+=end
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

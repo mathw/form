@@ -35,14 +35,14 @@ ok($r-field.width == 8, "Parsed right line field width is correct");
 #ok($field.alignment == Form::TextFormatting::Alignment::top, "Parsed right line field alignment is top");
 #ok($field.justify == Form::TextFormatting::Justify::right, "Parsed right line field justification is left");
 
-$r-result = Form::Grammar::Format.parse('{<<>>}', :action($actions));
+$r-result = Form::Grammar::Format.parse('{>><<}', :action($actions));
 ok($r-result, "Parse centred line field with actions succeeds");
 ok($r-result.ast[0] ~~ Form::Field::TextField, "Parse centred line field result object is TextField");
 ok($r-result.ast[0].width == 4, "Parsed centred line field has correct width");
 # RAKUDO: enable when we can use enums from another module
 #ok($r-result.ast[0].justify == Form::TextFormatting::Justify::centre, "Parsed centred line field justification is centre");
 
-$r-result = Form::Grammar::Format.parse('{]]][[}', :action($actions));
+$r-result = Form::Grammar::Format.parse('{[[[]]}', :action($actions));
 ok($r-result, "Parse justified line field with actions succeeds");
 ok($r-result.ast[0] ~~ Form::Field::TextField, "Parse justified line field result object is TextField");
 ok($r-result.ast[0].width == 5, "Parsed justified line field has correct width");
@@ -61,5 +61,6 @@ my $c = 1;
 for $mixed-results.ast Z <Str TextField Str TextField TextField> -> $r, $e {
 	ok($r.WHAT eq $e, "Mixed field section {$c++} has type $e");
 }
+
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
