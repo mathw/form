@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 18;
 
 use Form::Grammar;
 
@@ -20,5 +20,8 @@ ok(Form::Grammar::Format.parse('{<<<}wibble'), 'Left line field before literal p
 ok(Form::Grammar::Format.parse('floob{<<>}'), 'Centred line field after literal parses');
 ok(Form::Grammar::Format.parse('{|||||||}'), 'Centred line field (alternative)');
 ok(Form::Grammar::Format.parse('{IIII}'), 'Centred block field (alternative)');
-
+ok(Form::Grammar::Format.parse('{>>>>>>=}'), 'Middled end marker');
+ok(Form::Grammar::Format.parse('{=>>>>>>}'), 'Middled start marker');
+ok(Form::Grammar::Format.parse('{>>>>>>_}'), 'Bottomed end marker');
+ok(Form::Grammar::Format.parse('{_>>>>>>}'), 'Bottomed start marker');
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

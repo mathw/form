@@ -27,13 +27,11 @@ grammar Format {
 	}
 
 	regex bottom_aligned_field {
-		_ <aligned_field> _
-		{*}
+		[ _ <aligned_field> _?  {*} ] | [ <aligned_field> _ {*} ]
 	}
 
 	regex centre_aligned_field {
-		'=' <aligned_field> '='
-		{*}
+		[ '=' <aligned_field> '='? {*} ] | [ <aligned_field> '=' {*} ]
 	}
 
 	regex top_aligned_field {
