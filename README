@@ -5,9 +5,6 @@ This is a WORK IN PROGRESS and most likely doesn't work at any given time.
 TODO
 ====
 
-* Actions for grammar for fields currently defined
-* Code to format data into those field types
-* Hook it all up to sub form() so that those fields can be used
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
 * Currencies
