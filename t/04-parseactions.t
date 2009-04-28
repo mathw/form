@@ -58,8 +58,8 @@ ok($mixed-results.ast ~~ Array, "Mixed field parse returned an array");
 ok($mixed-results.ast.elems == 5, "Mixed field parse had the correct number of elements");
 
 my $c = 1;
-for $mixed-results.ast Z <Str TextField Str TextField TextField> -> $r, $e {
-	ok($r.WHAT eq $e, "Mixed field section {$c++} has type $e");
+for $mixed-results.ast Z (Str, Form::Field::TextField, Str, Form::Field::TextField, Form::Field::TextField) -> $r, $e {
+	ok($r ~~ $e, "Mixed field section {$c++} has type $e ({$r.WHAT})");
 }
 
 
