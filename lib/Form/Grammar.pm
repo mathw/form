@@ -44,6 +44,7 @@ grammar Format {
 		| <centred_field>         {*} #= centred_field
 		| <right_justified_field> {*} #= right_justified_field
 		| <fully_justified_field> {*} #= fully_justified_field
+		| <verbatim_field>        {*} #= verbatim_field
 	}
 
 	regex left_justified_field {
@@ -104,6 +105,19 @@ grammar Format {
 	regex justified_line_field {
 		'<'+ '>'+
 		{*}
+	}
+
+	regex verbatim_line_field {
+		'\''+ {*}
+	}
+
+	regex verbatim_block_field {
+		'"'+ {*}
+	}
+
+	regex verbatim_field {
+		  <verbatim_line_field> {*} #= verbatim_line_field
+		| <verbatim_block_field> {*} #= verbatim_block_field
 	}
 }
 

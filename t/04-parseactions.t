@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 27;
 
 use Form::Grammar;
 use Form::Actions;
@@ -62,5 +62,12 @@ for $mixed-results.ast Z (Str, Form::Field::TextField, Str, Form::Field::TextFie
 	ok($r ~~ $e, "Mixed field section {$c++} has type $e ({$r.WHAT})");
 }
 
+my $v-string = '{\'\'\'\'\'}';
+my $v-results = Form::Grammar::Format.parse($v-string, :action($actions));
+ok($v-results.ast ~~ Array, "Verbatim field parse returned an array");
+ok($v-results.ast.elems == 1, "Verbatim field parse has one element");
+ok($v-results.ast[0] ~~ Form::Field::VerbatimField, "Verbatime field object is a VerbatimField");
+ok($v-results.ast[0].width == 5, "Verbatim field object has correct width");
+ok($v-results.ast[0].block == Bool::False, "Verbatime field object is not a block");
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

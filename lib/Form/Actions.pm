@@ -2,16 +2,13 @@ module Form::Actions;
 
 use Form::Field;
 
-# RAKUDO: temporary workaround, Rakudo can't handle enums from other modules yet.
-#enum Justify <left right centre full>;
-#enum Alignment <top middle bottom>;
-
 =begin pod
 =head3 FormActions
 
 Class containing action methods to be associated with Form grammar defined in Form::Grammar.
 
 =end pod
+
 class FormActions {
 
 	method centred_field($/, $sub) {
@@ -100,6 +97,24 @@ class FormActions {
 		make $/{$sub}.ast;
 	}
 
+	method verbatim_field($/, $sub) {
+		make $/{$sub}.ast;
+	}
+
+	method verbatim_line_field($/) {
+		make Form::Field::VerbatimField.new(
+			:block(Bool::False),
+			:width((~$/).chars)
+		);
+	}
+	
+	method verbatim_block_field($/) {
+		make Form::Field::VerbatimField.new(
+			:block(Bool::True),
+			:width((~$/).chars)
+		);
+	}
+
 	method aligned_field($/, $sub) {
 		#say "aligned field ($sub)";
 		make $/{$sub}.ast;
@@ -155,13 +170,5 @@ class FormActions {
 		make @matches;
 	}
 }
-
-
-=begin pod
-=item count-fields
-
-Counts the number of fields in a list returned from the grammar actions
-
-=end
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

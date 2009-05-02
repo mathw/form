@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 use Form::Grammar;
 
@@ -24,4 +24,7 @@ ok(Form::Grammar::Format.parse('{>>>>>>=}'), 'Middled end marker');
 ok(Form::Grammar::Format.parse('{=>>>>>>}'), 'Middled start marker');
 ok(Form::Grammar::Format.parse('{>>>>>>_}'), 'Bottomed end marker');
 ok(Form::Grammar::Format.parse('{_>>>>>>}'), 'Bottomed start marker');
+ok(Form::Grammar::Format.parse('{\'\'\'\'\'\'\'\'\'\'}'), "Verbatim line field");
+ok(Form::Grammar::Format.parse('{""""""""""}'), "Verbatim block field");
+
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

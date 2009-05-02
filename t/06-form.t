@@ -3,7 +3,7 @@ use v6;
 use Test;
 use Form;
 
-plan 11;
+plan 12;
 
 ok(Form::form('a') eq "a\n", "Literal");
 ok(Form::form('{<<}', 'a') eq "a \n", "Single left-line field");
@@ -29,5 +29,6 @@ ok(
     "The quick  jumps over\nbrown fox    the lazy\n                  dog\n",
     "Multiple block overflow"
 );
+ok(Form::form('{""""}', "Boo\nYah") eq "Boo \nYah \n", "Literal block field");
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

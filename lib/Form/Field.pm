@@ -2,10 +2,6 @@ module Form::Field;
 
 use Form::TextFormatting;
 
-# RAKUDO: only here until we can export them from Form::TextFormatting
-#enum Justify <left right centre full>;
-#enum Alignment <top middle bottom>;
-
 role Field {
 	has Bool $.block is rw;
 	has Int $.width is rw;
@@ -73,7 +69,15 @@ class TextField does Form::Field::Field {
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
 #         we need to write "Form::Field::Field", not "Field".
 class VerbatimField does Form::Field::Field {
-	method format($data) { return [$.data]; }
+	method format($data) {
+		my @lines = $data.split("\n");
+		$.block or @lines = @lines[^1];
+		for @lines -> $line is rw {
+			$line = Form::TextFormatting::left-justify($line, $.width, ' ');
+		}
+
+		return @lines;
+	}
 }
 
 

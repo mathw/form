@@ -31,7 +31,7 @@ sub form(*@args is Scalar) returns Str is export {
 			when Str {
 				@formatted.push([$_]);
 			}
-			when Form::Field::TextField {
+			when Form::Field::Field {
 				@formatted.push([.format(@data.shift)]);
 			}
 		}
