@@ -19,7 +19,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::centre),
 			:block(Bool::True),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
@@ -27,7 +27,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::centre),
 			:block(Bool::False),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
@@ -39,7 +39,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::full),
 			:block(Bool::False),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
@@ -47,7 +47,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::full),
 			:block(Bool::True),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
@@ -56,7 +56,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::right),
 			:block(Bool::False),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
     }
 
@@ -65,7 +65,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::right),
 			:block(Bool::True),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
@@ -74,7 +74,7 @@ class FormActions {
         make Form::Field::TextField.new(
             :justify(Justify::left),
             :block(Bool::False),
-            :width((~$/).chars)
+            :width((~$/).chars + 2)
         );
     }
 
@@ -83,7 +83,7 @@ class FormActions {
 		make Form::Field::TextField.new(
 			:justify(Justify::left),
 			:block(Bool::True),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 	
@@ -104,14 +104,14 @@ class FormActions {
 	method verbatim_line_field($/) {
 		make Form::Field::VerbatimField.new(
 			:block(Bool::False),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 	
 	method verbatim_block_field($/) {
 		make Form::Field::VerbatimField.new(
 			:block(Bool::True),
-			:width((~$/).chars)
+			:width((~$/).chars + 2)
 		);
 	}
 
