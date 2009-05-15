@@ -5,6 +5,7 @@ This is a WORK IN PROGRESS and most likely doesn't work at any given time.
 TODO
 ====
 
+* Demo: HTML form generation
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
 * Currencies
