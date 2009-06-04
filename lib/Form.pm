@@ -15,6 +15,7 @@ sub form(*@args is Scalar) returns Str is export {
 		my $format = @args.shift;
 		my $f = Form::Grammar::Format.parse($format, :action($actions));
 		my @fields = $f.ast;
+		@fields or die "form: error: argument '$format' is not a valid format string";
 		my $nonliteral-field-count = @fields.grep({!($_ ~~ Str)}).elems;
 		if @args.elems < $nonliteral-field-count {
 			die "Insufficient number of data arguments ({@args.elems}) provided for format template '$format'";

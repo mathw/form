@@ -6,6 +6,7 @@ TODO
 ====
 
 * Demo: HTML form generation
+* Data specified as lists
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
 * Currencies

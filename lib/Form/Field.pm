@@ -2,13 +2,23 @@ module Form::Field;
 
 use Form::TextFormatting;
 
-role Field {
+# RAKUDO: Field is now a class, because overriding multis doesn't
+# work correctly from roles
+class Field {
 	has Bool $.block is rw;
 	has Int $.width is rw;
 	has $.alignment is rw;
 	has $.data is rw;
 	
-	method format($data) { ... }
+	multi method format(Str $data) { ... }
+
+	multi method format(Array $data) {
+		my @output;
+		for $data -> $datum {
+			@output.push(self.format($datum));
+		}
+	}
+
 	method align(@lines, $height) {
 		if @lines.elems < $height {
 			my @extra = (' ' x $.width) xx ($height - @lines.elems);
@@ -38,10 +48,11 @@ role Field {
 
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
 #         we need to write "Form::Field::Field", not "Field".
-class TextField does Form::Field::Field {
+class TextField is Form::Field::Field {
 	has $.justify is rw;
 
-	method format($data) {
+
+	multi method format(Str $data) {
 		my @lines = Form::TextFormatting::unjustified-wrap(~$data, $.width);
 
 		$.block or @lines = @lines[^1];
@@ -68,8 +79,8 @@ class TextField does Form::Field::Field {
 
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
 #         we need to write "Form::Field::Field", not "Field".
-class VerbatimField does Form::Field::Field {
-	method format($data) {
+class VerbatimField is Form::Field::Field {
+	multi method format(Str $data) {
 		my @lines = $data.split("\n");
 		$.block or @lines = @lines[^1];
 		for @lines -> $line is rw {

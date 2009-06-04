@@ -113,7 +113,7 @@ sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	# TODO need a justify algorithm
 	# for now, do something entirely unsatisfactory
 	if $line.chars < $width {
-		my Str @words = $line.comb;
+		my Str @words = $line.words;
 		my $to-add = $width - $line.chars;
 		my $words = @words.elems;
 		my @spaces = $space xx ($words - 1);
