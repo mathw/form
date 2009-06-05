@@ -97,6 +97,24 @@ class FormActions {
 		make $/{$sub}.ast;
 	}
 
+	method numeric_field($/, $sub) {
+		make $/{$sub}.ast;
+	}
+
+	method numeric_block_field($/) {
+		make Form::Field::NumericField.new(
+			:block(Bool::True),
+			:width((~$/).chars + 2)
+		);
+	}
+
+	method numeric_line_field($/) {
+		make Form::Field::NumericField.new(
+			:block(Bool::False),
+			:width((~$/).chars + 2)
+		);
+	}
+
 	method verbatim_field($/, $sub) {
 		make $/{$sub}.ast;
 	}

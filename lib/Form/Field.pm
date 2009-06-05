@@ -77,6 +77,11 @@ class TextField is Form::Field::Field {
 	}
 }
 
+# RAKUDO: [perl #63510]
+class NumericField is Form::Field::Field {
+
+}
+
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
 #         we need to write "Form::Field::Field", not "Field".
 class VerbatimField is Form::Field::Field {
