@@ -25,7 +25,7 @@ given Form::Grammar::Format {
     ok(.parse('{=>>>>>>}'), 'Middled start marker');
     ok(.parse('{>>>>>>_}'), 'Bottomed end marker');
     ok(.parse('{_>>>>>>}'), 'Bottomed start marker');
-    ok(.parse('{\'\'\'\'\'\'\'\'\'\'}'), "Verbatim line field");
+    ok(.parse(q[{''''''''''}]), "Verbatim line field");
     ok(.parse('{""""""""""}'), "Verbatim block field");
     ok(.parse('{]]].[[}'), 'Simple number block field parses');
     ok(.parse('{>>>.<<}'), 'Simple number line field parses');
