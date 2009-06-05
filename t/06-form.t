@@ -3,7 +3,7 @@ use v6;
 use Test;
 use Form;
 
-plan 12;
+plan 13;
 
 ok(Form::form('a') eq "a\n", "Literal");
 ok(Form::form('{<<}', 'a') eq "a   \n", "Single left-line field");
@@ -30,5 +30,7 @@ ok(
     "Multiple block overflow"
 );
 ok(Form::form('{""}', "Boo\nYah") eq "Boo \nYah \n", "Literal block field");
+
+dies_ok({Form::form('{<<<<}')}, 'Too few arguments');
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
