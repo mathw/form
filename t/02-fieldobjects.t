@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 4;
 
 use Form::Field;
 
@@ -15,6 +15,14 @@ lives_ok(
 );
 
 ok($textfield, "TextField constructor returned an object");
+
+{
+    my $numeric-field;
+    lives_ok( { $numeric-field = Form::Field::NumericField.new; },
+              'NumericField constructs with no parameters'
+    );
+    ok($numeric-field.defined, 'NumericField constructor returned an object');
+}
 
 # todo more of these please!
 
