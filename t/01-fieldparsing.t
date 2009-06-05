@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 22;
 
 use Form::Grammar;
 
@@ -27,6 +27,8 @@ given Form::Grammar::Format {
     ok(.parse('{_>>>>>>}'), 'Bottomed start marker');
     ok(.parse('{\'\'\'\'\'\'\'\'\'\'}'), "Verbatim line field");
     ok(.parse('{""""""""""}'), "Verbatim block field");
+    ok(.parse('{]]].[[}'), 'Simple number block field parses');
+    ok(.parse('{>>>.<<}'), 'Simple number line field parses');
 }
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
