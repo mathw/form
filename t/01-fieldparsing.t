@@ -6,25 +6,27 @@ plan 20;
 
 use Form::Grammar;
 
-ok(Form::Grammar::Format.parse('abcdefghijklm nopqrstuvwxyz.'), 'Plain literal string parses');
-ok(Form::Grammar::Format.parse('{[[[[[[}'), 'Simple left block field parses');
-ok(Form::Grammar::Format.parse('{]]]}'), 'Simple right block field parses');
-ok(Form::Grammar::Format.parse('{<<<<<<<<}'), 'Simple left line field parses');
-ok(Form::Grammar::Format.parse('{>>>>>}'), 'Simple right line field parses');
-ok(Form::Grammar::Format.parse('{[[]]}'), 'Simple block justified field parses');
-ok(Form::Grammar::Format.parse('{<<<>>}'), 'Simple line justified field parses');
-ok(Form::Grammar::Format.parse('{>><<}'), 'Simple centred line field parses');
-ok(Form::Grammar::Format.parse('{]]]][[[}'), 'Simple centred block field parses');
-ok(Form::Grammar::Format.parse('abc {[[[[} def'), 'Left block field inside literals parses');
-ok(Form::Grammar::Format.parse('{<<<}wibble'), 'Left line field before literal parses');
-ok(Form::Grammar::Format.parse('floob{<<>}'), 'Centred line field after literal parses');
-ok(Form::Grammar::Format.parse('{|||||||}'), 'Centred line field (alternative)');
-ok(Form::Grammar::Format.parse('{IIII}'), 'Centred block field (alternative)');
-ok(Form::Grammar::Format.parse('{>>>>>>=}'), 'Middled end marker');
-ok(Form::Grammar::Format.parse('{=>>>>>>}'), 'Middled start marker');
-ok(Form::Grammar::Format.parse('{>>>>>>_}'), 'Bottomed end marker');
-ok(Form::Grammar::Format.parse('{_>>>>>>}'), 'Bottomed start marker');
-ok(Form::Grammar::Format.parse('{\'\'\'\'\'\'\'\'\'\'}'), "Verbatim line field");
-ok(Form::Grammar::Format.parse('{""""""""""}'), "Verbatim block field");
+given Form::Grammar::Format {
+    ok(.parse('abcdefghijklm nopqrstuvwxyz.'), 'Plain literal string parses');
+    ok(.parse('{[[[[[[}'), 'Simple left block field parses');
+    ok(.parse('{]]]}'), 'Simple right block field parses');
+    ok(.parse('{<<<<<<<<}'), 'Simple left line field parses');
+    ok(.parse('{>>>>>}'), 'Simple right line field parses');
+    ok(.parse('{[[]]}'), 'Simple block justified field parses');
+    ok(.parse('{<<<>>}'), 'Simple line justified field parses');
+    ok(.parse('{>><<}'), 'Simple centred line field parses');
+    ok(.parse('{]]]][[[}'), 'Simple centred block field parses');
+    ok(.parse('abc {[[[[} def'), 'Left block field inside literals parses');
+    ok(.parse('{<<<}wibble'), 'Left line field before literal parses');
+    ok(.parse('floob{<<>}'), 'Centred line field after literal parses');
+    ok(.parse('{|||||||}'), 'Centred line field (alternative)');
+    ok(.parse('{IIII}'), 'Centred block field (alternative)');
+    ok(.parse('{>>>>>>=}'), 'Middled end marker');
+    ok(.parse('{=>>>>>>}'), 'Middled start marker');
+    ok(.parse('{>>>>>>_}'), 'Bottomed end marker');
+    ok(.parse('{_>>>>>>}'), 'Bottomed start marker');
+    ok(.parse('{\'\'\'\'\'\'\'\'\'\'}'), "Verbatim line field");
+    ok(.parse('{""""""""""}'), "Verbatim block field");
+}
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
