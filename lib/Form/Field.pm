@@ -1,6 +1,7 @@
 module Form::Field;
 
 use Form::TextFormatting;
+use Form::NumberFormatting;
 
 # RAKUDO: Field is now a class, because overriding multis doesn't
 # work correctly from roles
@@ -79,7 +80,16 @@ class TextField is Form::Field::Field {
 
 # RAKUDO: [perl #63510]
 class NumericField is Form::Field::Field {
+	has Num $.ints-width;
+	has Num $.frac-width;
 
+    multi method format(Num $data)
+	{
+		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts($data);
+		$ints = Form::TextFormatting::right-align($ints, $.ints-width);
+		$fractions = Form::TextFormatting::left-align($fractions, $.fracs-width);
+		return $ints ~ '.' ~ $fractions;
+	}
 }
 
 # RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,

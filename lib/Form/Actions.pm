@@ -111,7 +111,9 @@ class FormActions {
 	method numeric_line_field($/) {
 		make Form::Field::NumericField.new(
 			:block(Bool::False),
-			:width((~$/).chars + 2)
+			:width((~$/).chars + 2),
+			:ints-width((~$/[0]).chars),
+			:frac-width((~$/[1]).chars)
 		);
 	}
 

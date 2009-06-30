@@ -12,7 +12,7 @@ my $rakudo;
 
 $rakudo_dir or $parrot_dir or die 'Please set $RAKUDO_DIR or $PARROT_DIR (see README).'."\n";
 
-$ENV{PERL6LIB} or die 'Please set $PERL6LIB (see README).'."\n";
+#$ENV{PERL6LIB} or die 'Please set $PERL6LIB (see README).'."\n";
 
 if ( ! $rakudo_dir ) {
 	# we have to assume rakudo-inside-parrot

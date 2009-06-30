@@ -1,5 +1,7 @@
 RAKUDO=<RAKUDO>
 
+PERL6LIB=lib/
+
 SOURCES=lib/Test.pm lib/Form/Actions.pm lib/Form/Grammar.pm lib/Form/TextFormatting.pm lib/Form/Field.pm lib/Form.pm
 
 PIRS=$(SOURCES:.pm=.pir)
@@ -7,7 +9,7 @@ PIRS=$(SOURCES:.pm=.pir)
 all: $(PIRS)
 
 %.pir: %.pm
-	$(RAKUDO) --target=pir --output=$@ $<
+	PERL6LIB=$(PERL6LIB) $(RAKUDO) --target=pir --output=$@ $<
 
 clean:
 	rm -f $(PIRS)
@@ -15,5 +17,4 @@ clean:
 tests: test
 
 test: all
-	prove -e '$(RAKUDO)'\
-	      -r --nocolor t/
+	PERL6LIB=$(PERL6LIB) prove -e '$(RAKUDO)' -r t/

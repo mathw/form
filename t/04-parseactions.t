@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 32;
 
 use Form::Grammar;
 use Form::Actions;
@@ -68,6 +68,19 @@ ok($v-results.ast ~~ Array, "Verbatim field parse returned an array");
 ok($v-results.ast.elems == 1, "Verbatim field parse has one element");
 ok($v-results.ast[0] ~~ Form::Field::VerbatimField, "Verbatime field object is a VerbatimField");
 ok($v-results.ast[0].width == 5, "Verbatim field object has correct width");
-ok($v-results.ast[0].block == Bool::False, "Verbatime field object is not a block");
+ok($v-results.ast[0].block == Bool::False, "Verbatim field object is not a block");
+
+
+{
+	my $source = '{>>>.<<<}';
+	my $r = Form::Grammar::Format.parse($source, action => $actions);
+	ok($r.ast ~~ Array, "Numeric field parse returned an array");
+	my $ast = $r.ast;
+	ok($ast.elems == 1, "Numeric field parse has one element");
+	my $field = $ast[0];
+	ok($field.block == Bool::False, "Numeric field object is not a block");
+	ok($field.ints-width == 3, "Numeric field int-width is correct");
+	ok($field.frac-width == 3, "Numeric field frac-width is correct");
+}
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

@@ -114,11 +114,11 @@ grammar Format {
 	}
 
 	regex numeric_block_field {
-		']'+ '.' '['+ {*}
+		(']'+) '.' ('['+) {*}
 	}
 
 	regex numeric_line_field {
-		'>'+ '.' '<'+ {*}
+		('>'+) '.' ('<'+) {*}
 	}
 
 	regex verbatim_line_field {
