@@ -23,7 +23,7 @@ sub chop-first-word(Str $source is rw) returns Str {
 	}
 }
 
-sub fit-in-width(Str $text, Int $width) #{returns Array of Str} {
+sub fit-in-width(Str $text, Int $width) #`{returns Array of Str} {
 
 	my Str $fitted = '';
 	my Str $remainder = $text;
@@ -59,7 +59,7 @@ sub fit-in-width(Str $text, Int $width) #{returns Array of Str} {
 }
 
 
-sub unjustified-wrap(Str $text, Int $width) #{returns Array of Str} {
+sub unjustified-wrap(Str $text, Int $width) #`{returns Array of Str} {
 	my $rem = $text;
 	my $line;
 
