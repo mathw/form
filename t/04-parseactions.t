@@ -80,7 +80,7 @@ ok($v-results.ast[0].block == Bool::False, "Verbatim field object is not a block
 	my $field = $ast[0];
 	ok($field.block == Bool::False, "Numeric field object is not a block");
 	ok($field.ints-width == 3, "Numeric field int-width is correct");
-	ok($field.frac-width == 3, "Numeric field frac-width is correct");
+	ok($field.fracs-width == 3, "Numeric field fracs-width is correct");
 }
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

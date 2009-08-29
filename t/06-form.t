@@ -3,7 +3,7 @@ use v6;
 use Test;
 use Form;
 
-plan 13;
+plan 17;
 
 ok(Form::form('a') eq "a\n", "Literal");
 ok(Form::form('{<<}', 'a') eq "a   \n", "Single left-line field");
@@ -32,5 +32,12 @@ ok(
 ok(Form::form('{""}', "Boo\nYah") eq "Boo \nYah \n", "Literal block field");
 
 dies_ok({Form::form('{<<<<}')}, 'Too few arguments');
+
+# time for some numbers
+
+ok(Form::form('{>>>.<<}', 456.78) eq "456.78\n", "Simple numeric field");
+ok(Form::form('{>>>.<<}', 56.7) eq " 56.7 \n", "Non-full simple numeric field");
+ok(Form::form('{>>>.<<}', 4567.89) eq "567.89\n", "Left-side overflow numeric field");
+ok(Form::form('{>>>.<<}', 56.789) eq " 56.78\n", "Right-side overflow numeric field");
 
 # vim: ft=perl6 sw=4 ts=4 noexpandtab

@@ -2,13 +2,9 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 22;
 
 use Form::Field;
-
-# RAKUDO: only until we can export them from Form::TextFormatting
-#enum Justify <left right centre full>;
-#enum Alignment <top middle bottom>;
 
 my $right-text-field = Form::Field::TextField.new(
     :block(Bool::False),
@@ -56,6 +52,17 @@ ok(@aligned[2] eq " baz foo  ", "CTF align third line is correct");
 ok(@aligned[3] eq " bar baz  ", "CTF align fourth line is correct");
 ok(@aligned[4] eq " " x $centre-text-field.width, "CTF align fifth line correct");
 ok(@aligned[5] eq " " x $centre-text-field.width, "CTF align sixth line correct");
+
+
+# Test numeric field formatting
+{
+	my Form::Field::NumericField $number-field .= new(ints-width => 4, fracs-width => 3);
+	my Num $datum = 15.6;
+	my $result = $number-field.format($datum);
+	ok($result ~~ Array, "Number field format returned an array");
+	ok($result[0] eq "  15.6  ", "Number field format returned correct value");
+}
+
 # vim: ft=perl6 sw=4 ts=4 noexpandtab
 
 

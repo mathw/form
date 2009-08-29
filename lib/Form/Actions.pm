@@ -113,7 +113,7 @@ class FormActions {
 			:block(Bool::False),
 			:width((~$/).chars + 2),
 			:ints-width((~$/[0]).chars),
-			:frac-width((~$/[1]).chars)
+			:fracs-width((~$/[1]).chars)
 		);
 	}
 

@@ -93,7 +93,7 @@ sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 		return ($space x (($width - $line.chars) / $space.chars)) ~ $line;
 	}
 
-	return $line.substr(0, $width);
+	return $line.substr($line.chars - $width, $width);
 }
 
 sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {

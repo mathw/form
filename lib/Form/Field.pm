@@ -81,14 +81,14 @@ class TextField is Form::Field::Field {
 # RAKUDO: [perl #63510]
 class NumericField is Form::Field::Field {
 	has Num $.ints-width;
-	has Num $.frac-width;
+	has Num $.fracs-width;
 
     multi method format(Num $data)
 	{
 		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts($data);
-		$ints = Form::TextFormatting::right-align($ints, $.ints-width);
-		$fractions = Form::TextFormatting::left-align($fractions, $.fracs-width);
-		return $ints ~ '.' ~ $fractions;
+		$ints = Form::TextFormatting::right-justify(~$ints, $.ints-width);
+		$fractions = Form::TextFormatting::left-justify(~$fractions, $.fracs-width);
+		return [ $ints ~ '.' ~ $fractions ];
 	}
 }
 
