@@ -104,7 +104,9 @@ class FormActions {
 	method numeric_block_field($/) {
 		make Form::Field::NumericField.new(
 			:block(Bool::True),
-			:width((~$/).chars + 2)
+			:width((~$/).chars + 2),
+			:ints-width((~$/[0]).chars + 1),
+			:fracs-width((~$/[1]).chars + 1)
 		);
 	}
 
@@ -112,8 +114,8 @@ class FormActions {
 		make Form::Field::NumericField.new(
 			:block(Bool::False),
 			:width((~$/).chars + 2),
-			:ints-width((~$/[0]).chars),
-			:fracs-width((~$/[1]).chars)
+			:ints-width((~$/[0]).chars + 1),
+			:fracs-width((~$/[1]).chars + 1)
 		);
 	}
 

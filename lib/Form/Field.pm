@@ -13,11 +13,12 @@ class Field {
 	
 	multi method format(Str $data) { ... }
 
-	multi method format(Array $data) {
+	multi method format(@data) {
 		my @output;
-		for $data -> $datum {
+		for @data -> $datum {
 			@output.push(self.format($datum));
 		}
+		return @output;
 	}
 
 	method align(@lines, $height) {
