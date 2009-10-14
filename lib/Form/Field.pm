@@ -31,7 +31,7 @@ class Field {
 				return (@extra, @lines);
 			}
 			else {
-				my @top = (' ' x $.width) xx (int(@extra.elems / 2));
+				my @top = (' ' x $.width) xx (@extra.elems div 2);
 				my @bottom = @top;
 				@extra.elems % 2 and @bottom.push(' ' x $.width);
 				return (@top, @lines, @bottom);

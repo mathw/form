@@ -99,10 +99,10 @@ sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
 		my Int $to-add = $width - $line.chars;
-		my Int $before = int($to-add / 2);
+		my Int $before = $to-add div 2;
 		my Int $after = $before + $to-add % 2;
-		$before /= $space.chars;
-		$after /= $space.chars;
+		$before div= $space.chars;
+		$after div= $space.chars;
 		return ($space x $before) ~ $line ~ ($space x $after);
 	}
 

@@ -17,4 +17,4 @@ clean:
 tests: test
 
 test: all
-	PERL6LIB=$(PERL6LIB) prove -e '$(RAKUDO)' -r t/
+	PERL6LIB=$(PERL6LIB) prove --perl '$(RAKUDO)' -r t/
