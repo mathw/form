@@ -6,7 +6,7 @@ plan 22;
 
 use Form::Grammar;
 
-given Form::Grammar::Format {
+given Format {
     ok(.parse('abcdefghijklm nopqrstuvwxyz.'), 'Plain literal string parses');
     ok(.parse('{[[[[[[}'), 'Simple left block field parses');
     ok(.parse('{]]]}'), 'Simple right block field parses');

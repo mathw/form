@@ -23,7 +23,7 @@ sub chop-first-word(Str $source is rw) returns Str {
 	}
 }
 
-sub fit-in-width(Str $text, Int $width) #`{returns Array of Str} {
+sub fit-in-width(Str $text, Int $width) {
 
 	my Str $fitted = '';
 	my Str $remainder = $text;
@@ -59,7 +59,7 @@ sub fit-in-width(Str $text, Int $width) #`{returns Array of Str} {
 }
 
 
-sub unjustified-wrap(Str $text, Int $width) #`{returns Array of Str} {
+sub unjustified-wrap(Str $text, Int $width) {
 	my $rem = $text;
 	my $line;
 
@@ -117,19 +117,29 @@ sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 		my $to-add = $width - $line.chars;
 		my $words = @words.elems;
 		my @spaces = $space xx ($words - 1);
-		my $words-width = [+] @words.map({ .chars });
-		my $spaces-width = [+] @spaces.map({ .chars });
+
+		# RAKUDO: reduce meta-op not in master post-ng
+		#my $words-width = [+] @words.map: *.chars;
+		my $words-width = @words.map({.chars}).reduce(&infix:<+>);
+		#my $spaces-width = [+] @spaces.map: *.chars;
+		my $spaces-width = @spaces.map({.chars}).reduce(&infix:<+>);
+
 		my $act-space = 0;
 		while $words-width + $spaces-width < $width
 		{
 			@spaces[$act-space++] ~= $space;
-			$spaces-width = [+] @spaces.map({ .chars });
+
+			# RAKUDO no reduce meta-op yet
+			#$spaces-width = [+] @spaces.map({ .chars });
+			$spaces-width = @spaces.map({.chars}).reduce(&infix:<+>);
+
 			$act-space >= @spaces.elems and $act-space = 0;
 		}
 
 		@spaces.push('');
 
-		return [~] (@words Z @spaces);
+		#return [~] (@words Z @spaces);
+		return (@words Z @spaces).reduce: &infix:<~>;
 	}
 
 	return $line.substr(0, $width);

@@ -32,7 +32,7 @@ sub form(*@args is Scalar) returns Str is export {
 			when Str {
 				@formatted.push([$_]);
 			}
-			when Form::Field::Field {
+			when Field {
 				@formatted.push([.format(@data.shift)]);
 			}
 		}
@@ -40,7 +40,7 @@ sub form(*@args is Scalar) returns Str is export {
 		my $most-lines = ([max] @formatted.map: *.elems);
 		for @fields Z @formatted -> $field, $flines is rw {
 			if $flines.elems < $most-lines {
-				if $field ~~ Form::Field::Field {
+				if $field ~~ Field {
 					$flines = $field.align($flines, $most-lines);
 				}
 				elsif $field ~~ Str {

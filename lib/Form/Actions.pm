@@ -52,7 +52,6 @@ class FormActions {
 	}
 
     method right_justified_line_field($/) {
-		#say "Right justified line field";
 		make Form::Field::TextField.new(
 			:justify(Justify::right),
 			:block(Bool::False),
@@ -61,7 +60,6 @@ class FormActions {
     }
 
 	method right_justified_block_field($/) {
-		#say "Right justified block field";
 		make Form::Field::TextField.new(
 			:justify(Justify::right),
 			:block(Bool::True),
@@ -70,7 +68,6 @@ class FormActions {
 	}
 
     method left_justified_line_field($/) {
-        #say "Left justified line field";
         make Form::Field::TextField.new(
             :justify(Justify::left),
             :block(Bool::False),
@@ -79,7 +76,6 @@ class FormActions {
     }
 
 	method left_justified_block_field($/) {
-		#say "Left justified block field";
 		make Form::Field::TextField.new(
 			:justify(Justify::left),
 			:block(Bool::True),
@@ -88,12 +84,10 @@ class FormActions {
 	}
 	
 	method right_justified_field($/, $sub) {
-		#say "right justified field";
 		make $/{$sub}.ast;
 	}
 
 	method left_justified_field($/, $sub) {
-		#say "left justified field ($sub)";
 		make $/{$sub}.ast;
 	}
 

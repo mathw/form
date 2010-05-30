@@ -24,17 +24,19 @@ class Field {
 	method align(@lines, $height) {
 		if @lines.elems < $height {
 			my @extra = (' ' x $.width) xx ($height - @lines.elems);
-			if $.alignment == Alignment::top {
-				return (@lines, @extra);
-			}
-			elsif $.alignment == Alignment::bottom {
-				return (@extra, @lines);
-			}
-			else {
-				my @top = (' ' x $.width) xx (@extra.elems div 2);
-				my @bottom = @top;
-				@extra.elems % 2 and @bottom.push(' ' x $.width);
-				return (@top, @lines, @bottom);
+			given $.alignment {
+				when Alignment::top {
+					return (@lines, @extra);
+				}
+				when Alignment::bottom {
+					return (@extra, @lines);
+				}
+				default {
+					my @top = (' ' x $.width) xx (@extra.elems div 2);
+					my @bottom = @top;
+					@extra.elems % 2 and @bottom.push(' ' x $.width);
+					return (@top, @lines, @bottom);
+				}
 			}
 		}
 		elsif @lines.elems > $height {
@@ -47,10 +49,7 @@ class Field {
 	}
 }
 
-
-# RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
-#         we need to write "Form::Field::Field", not "Field".
-class TextField is Form::Field::Field {
+class TextField is Field {
 	has $.justify is rw;
 
 
@@ -79,8 +78,7 @@ class TextField is Form::Field::Field {
 	}
 }
 
-# RAKUDO: [perl #63510]
-class NumericField is Form::Field::Field {
+class NumericField is Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
@@ -93,9 +91,7 @@ class NumericField is Form::Field::Field {
 	}
 }
 
-# RAKUDO: Don't know what's correct here, but until [perl #63510] is resolved,
-#         we need to write "Form::Field::Field", not "Field".
-class VerbatimField is Form::Field::Field {
+class VerbatimField is Field {
 	multi method format(Str $data) {
 		my @lines = $data.split("\n");
 		$.block or @lines = @lines[^1];
