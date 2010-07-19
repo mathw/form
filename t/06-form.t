@@ -5,23 +5,23 @@ use Form;
 
 plan 21;
 
-ok(Form::form('a') eq "a\n", "Literal");
-ok(Form::form('{<<}', 'a') eq "a   \n", "Single left-line field");
-ok(Form::form('{<<}a', 'a') eq "a   a\n", "Single left-line field with literal after");
-ok(Form::form('{>>}a', 'a') eq "   aa\n", "Single right-line field with literal after");
-ok(Form::form('{>>><<}{<<<}', 'a', 'b') eq "   a   b    \n", "Single centred-line field with single left-line field after");
-ok(Form::form('{<<}', 'a', '{>>}', 'b') eq "a   \n   b\n", "Two fields");
-ok(Form::form(
+ok(form('a') eq "a\n", "Literal");
+ok(form('{<<}', 'a') eq "a   \n", "Single left-line field");
+ok(form('{<<}a', 'a') eq "a   a\n", "Single left-line field with literal after");
+ok(form('{>>}a', 'a') eq "   aa\n", "Single right-line field with literal after");
+ok(form('{>>><<}{<<<}', 'a', 'b') eq "   a   b    \n", "Single centred-line field with single left-line field after");
+ok(form('{<<}', 'a', '{>>}', 'b') eq "a   \n   b\n", "Two fields");
+ok(form(
     '+----+',
     '|{<<}|', 'aa',
     '+----+'
 ) eq "+----+\n|aa  |\n+----+\n", "Two literals, one field");
-dies_ok(-> { Form::form('{<<}{>>}', 'a') }, "Insufficient arguments");
-ok(Form::form('{<<<<<}', "The quick brown fox jumps over the lazy dog") eq "The    \n", "Line field overflow");
+dies_ok(-> { form('{<<}{>>}', 'a') }, "Insufficient arguments");
+ok(form('{<<<<<}', "The quick brown fox jumps over the lazy dog") eq "The    \n", "Line field overflow");
 # TODO: reformat these as here-documents for neatness - when Rakudo supports them
-ok(Form::form('{[[[[[}', "The quick brown fox jumps over the lazy dog") eq "The    \nquick  \nbrown  \nfox    \njumps  \nover   \nthe    \nlazy   \ndog    \n", "Block field overflow");
+ok(form('{[[[[[}', "The quick brown fox jumps over the lazy dog") eq "The    \nquick  \nbrown  \nfox    \njumps  \nover   \nthe    \nlazy   \ndog    \n", "Block field overflow");
 ok(
-    Form::form(
+    form(
         '{[[[[[[[[} {]]]]]]]]}',
         "The quick brown fox", "jumps over the lazy dog"
     )
@@ -29,19 +29,19 @@ ok(
     "The quick  jumps over\nbrown fox    the lazy\n                  dog\n",
     "Multiple block overflow"
 );
-ok(Form::form('{""}', "Boo\nYah") eq "Boo \nYah \n", "Literal block field");
+ok(form('{""}', "Boo\nYah") eq "Boo \nYah \n", "Literal block field");
 
-dies_ok({Form::form('{<<<<}')}, 'Too few arguments');
+dies_ok({form('{<<<<}')}, 'Too few arguments');
 
 # time for some numbers
 
-ok(Form::form('{>>.<}', 456.78) eq "456.78\n", "Simple numeric field");
-ok(Form::form('{>>.<}', 56.7) eq " 56.7 \n", "Non-full simple numeric field");
-ok(Form::form('{>>.<}', 4567.89) eq "567.89\n", "Left-side overflow numeric field");
-ok(Form::form('{>>.<}', 56.789) eq " 56.78\n", "Right-side overflow numeric field");
+ok(form('{>>.<}', 456.78) eq "456.78\n", "Simple numeric field");
+ok(form('{>>.<}', 56.7) eq " 56.7 \n", "Non-full simple numeric field");
+ok(form('{>>.<}', 4567.89) eq "567.89\n", "Left-side overflow numeric field");
+ok(form('{>>.<}', 56.789) eq " 56.78\n", "Right-side overflow numeric field");
 
 # Mixed numbers and text
-ok(Form::form(
+ok(form(
 		'{[[[[[[} {>.<<<}',
 		"Six short people went down to the sea", 6.78
 	)
@@ -53,7 +53,7 @@ ok(Form::form(
 # Multiple numbers
 my @nums = (4.5, 5.6, 6.78, 9.101);
 ok(
-	Form::form(
+	form(
 		'{>>.<<}', \@nums
 	)
 	eq
@@ -64,7 +64,7 @@ ok(
 # Multiple strings
 my @strings = <one two three four>;
 ok(
-	Form::form(
+	form(
 		'{>>>>>>}',
 		\@strings
 	)
@@ -76,7 +76,7 @@ ok(
 # Both!
 
 ok(
-	Form::form(
+	form(
 		'{>>>>>>}|{>.<<}',
 		\@strings, \@nums
 	)

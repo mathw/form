@@ -23,7 +23,7 @@ sub chop-first-word(Str $source is rw) returns Str {
 	}
 }
 
-sub fit-in-width(Str $text, Int $width) {
+our sub fit-in-width(Str $text, Int $width) {
 
 	my Str $fitted = '';
 	my Str $remainder = $text;
@@ -59,7 +59,7 @@ sub fit-in-width(Str $text, Int $width) {
 }
 
 
-sub unjustified-wrap(Str $text, Int $width) {
+our sub unjustified-wrap(Str $text, Int $width) {
 	my $rem = $text;
 	my $line;
 
@@ -80,7 +80,7 @@ sub trim-ending-whitespace(Str $line) returns Str {
 	return $line.subst(/ <ws> $$ /, '');
 }
 
-sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+our sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
 		return $line ~ (($space x ($width - $line.chars) / $space.chars));
 	}
@@ -88,7 +88,7 @@ sub left-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	return $line.substr(0, $width);
 }
 
-sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+our sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
 		return ($space x (($width - $line.chars) / $space.chars)) ~ $line;
 	}
@@ -96,7 +96,7 @@ sub right-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	return $line.substr($line.chars - $width, $width);
 }
 
-sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+our sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	if $line.chars < $width {
 		my Int $to-add = $width - $line.chars;
 		my Int $before = $to-add div 2;
@@ -109,7 +109,7 @@ sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	return $line.substr(0, $width);
 }
 
-sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+our sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	# TODO need a justify algorithm
 	# for now, do something entirely unsatisfactory
 	if $line.chars < $width {
@@ -118,11 +118,8 @@ sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 		my $words = @words.elems;
 		my @spaces = $space xx ($words - 1);
 
-		# RAKUDO: reduce meta-op not in master post-ng
-		#my $words-width = [+] @words.map: *.chars;
-		my $words-width = @words.map({.chars}).reduce(&infix:<+>);
-		#my $spaces-width = [+] @spaces.map: *.chars;
-		my $spaces-width = @spaces.map({.chars}).reduce(&infix:<+>);
+		my $words-width = [+] @words.map: *.chars;
+		my $spaces-width = [+] @spaces.map: *.chars;
 
 		my $act-space = 0;
 		while $words-width + $spaces-width < $width

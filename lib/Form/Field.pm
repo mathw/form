@@ -5,7 +5,7 @@ use Form::NumberFormatting;
 
 # RAKUDO: Field is now a class, because overriding multis doesn't
 # work correctly from roles
-class Field {
+our class Field {
 	has Bool $.block is rw;
 	has Int $.width is rw;
 	has $.alignment is rw;
@@ -49,7 +49,7 @@ class Field {
 	}
 }
 
-class TextField is Field {
+our class TextField is Field {
 	has $.justify is rw;
 
 
@@ -78,7 +78,7 @@ class TextField is Field {
 	}
 }
 
-class NumericField is Field {
+our class NumericField is Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
@@ -91,7 +91,7 @@ class NumericField is Field {
 	}
 }
 
-class VerbatimField is Field {
+our class VerbatimField is Field {
 	multi method format(Str $data) {
 		my @lines = $data.split("\n");
 		$.block or @lines = @lines[^1];

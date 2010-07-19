@@ -13,18 +13,21 @@ Utility functions for formatting numbers in Form.pm.
 
 =begin pod
 
-=head2 obtain-number-parts(Num $number)
+=head2 obtain-number-parts(Real $number)
 
 Splits out the integer and non-integer components of a number. Returns a list of int part, float part.
 
-This should probably be done with mathematical operations rather than Str::split, but once floating-point gets involved it breaks, so that's a TODO until RAKUDO has the Rat type and we can do it sanely.
-
 =end pod
 
-sub obtain-number-parts(Num $number) {
-    my ($ints, $fractions) = (~$number).split(/\./);
+our sub obtain-number-parts(Real $number) {
+	my $ints = $number.Int;
+	my $fractions = $number - $ints;
 
-    return (+$ints, +$fractions);
+	# it's much easier if we have this as an integer as it's rendered separately to the ints
+	$fractions.=abs;
+	$fractions *= 10 while $fractions.Int != $fractions;
+
+    return ($ints, $fractions);
 }
 
 =begin pod

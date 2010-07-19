@@ -11,6 +11,7 @@ TODO
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
 * Currencies
+* Rendering of Complex numbers (currently restricted to Real)
 * Everything else
 
 
