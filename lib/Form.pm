@@ -9,11 +9,11 @@ sub form(*@args is Scalar --> Str) is export {
 	my @lines;
 	my $result = '';
 
-	my $actions = Form::Actions::FormActions.new;
+	my $actions = Form::Actions.new;
 
 	while @args.elems {
 		my $format = @args.shift;
-		my $f = Form::Grammar::Format.parse($format, :action($actions));
+		my $f = Form::Grammar.parse($format, :actions($actions));
 		my @fields = $f.ast;
 		@fields or die "form: error: argument '$format' is not a valid format string";
 		my $nonliteral-field-count = @fields.grep({!($_ ~~ Str)}).elems;

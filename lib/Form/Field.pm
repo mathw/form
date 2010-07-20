@@ -49,7 +49,7 @@ our class Field {
 	}
 }
 
-our class TextField is Field {
+our class Form::Field::Text is Field {
 	has $.justify is rw;
 
 
@@ -78,7 +78,7 @@ our class TextField is Field {
 	}
 }
 
-our class NumericField is Field {
+our class Form::Field::Numeric is Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
@@ -91,7 +91,7 @@ our class NumericField is Field {
 	}
 }
 
-our class VerbatimField is Field {
+our class Form::Field::Verbatim is Field {
 	multi method format(Str $data) {
 		my @lines = $data.split("\n");
 		$.block or @lines = @lines[^1];

@@ -6,14 +6,14 @@ plan 22;
 
 use Form::Field;
 
-my $right-text-field = Form::Field::TextField.new(
+my $right-text-field = Form::Field::Text.new(
     :block(Bool::False),
     :width(10),
     :alignment(Alignment::top),
     :justify(Justify::right)
 );
 
-ok($right-text-field ~~ Form::Field::TextField, "Right-justified text field constructed");
+ok($right-text-field ~~ Form::Field::Text, "Right-justified text field constructed");
 
 my $data = "foo";
 
@@ -23,14 +23,14 @@ ok(@lines.elems == 1, "Right text field format returned one line");
 ok(@lines[0].chars == $right-text-field.width, "Right text field format returned correct length line");
 ok(@lines[0] eq "       foo", "Right text field format returned correct line");
 
-my $centre-text-field = Form::Field::TextField.new(
+my $centre-text-field = Form::Field::Text.new(
     :block(Bool::True),
     :width(10),
     :alignment(Alignment::middle),
     :justify(Justify::centre)
 );
 
-ok($centre-text-field ~~ Form::Field::TextField, "Centre text field constructed");
+ok($centre-text-field ~~ Form::Field::Text, "Centre text field constructed");
 
 $data = "foo bar baz foo bar baz";
 @lines = $centre-text-field.format($data);
@@ -56,7 +56,7 @@ ok(@aligned[5] eq " " x $centre-text-field.width, "CTF align sixth line correct"
 
 # Test numeric field formatting
 {
-	my Form::Field::NumericField $number-field .= new(ints-width => 4, fracs-width => 3);
+	my Form::Field::Numeric $number-field .= new(ints-width => 4, fracs-width => 3);
 	my Num $datum = 15.6;
 	my $result = $number-field.format($datum);
 	ok($result ~~ Array, "Number field format returned an array");
