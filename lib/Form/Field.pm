@@ -82,7 +82,7 @@ our class Form::Field::Numeric is Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
-    multi method format(Num $data)
+    multi method format(Real $data)
 	{
 		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts($data);
 		$ints = Form::TextFormatting::right-justify(~$ints, $.ints-width);

@@ -57,7 +57,7 @@ ok(@aligned[5] eq " " x $centre-text-field.width, "CTF align sixth line correct"
 # Test numeric field formatting
 {
 	my Form::Field::Numeric $number-field .= new(ints-width => 4, fracs-width => 3);
-	my Num $datum = 15.6;
+	my Real $datum = 15.6;
 	my $result = $number-field.format($datum);
 	ok($result ~~ Array, "Number field format returned an array");
 	ok($result[0] eq "  15.6  ", "Number field format returned correct value");
