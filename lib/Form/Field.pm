@@ -5,7 +5,7 @@ use Form::NumberFormatting;
 
 # RAKUDO: Field is now a class, because overriding multis doesn't
 # work correctly from roles
-our class Field {
+our class Form::Field::Field {
 	has Bool $.block is rw;
 	has Int $.width is rw;
 	has $.alignment is rw;
@@ -21,21 +21,25 @@ our class Field {
 		return @output;
 	}
 
-	method align(@lines, $height) {
+	method align(@lines is copy, $height) {
 		if @lines.elems < $height {
 			my @extra = (' ' x $.width) xx ($height - @lines.elems);
 			given $.alignment {
 				when Alignment::top {
-					return (@lines, @extra);
+					@lines.push: @extra;
+					return @lines;
 				}
 				when Alignment::bottom {
-					return (@extra, @lines);
+					@lines.unshift: @extra;
+					return @lines;
 				}
 				default {
 					my @top = (' ' x $.width) xx (@extra.elems div 2);
 					my @bottom = @top;
 					@extra.elems % 2 and @bottom.push(' ' x $.width);
-					return (@top, @lines, @bottom);
+					@lines.shift: @top;
+					@lines.push: @bottom;
+					return @lines;
 				}
 			}
 		}
@@ -49,7 +53,7 @@ our class Field {
 	}
 }
 
-our class Form::Field::Text is Field {
+our class Form::Field::Text is Form::Field::Field {
 	has $.justify is rw;
 
 
@@ -71,27 +75,26 @@ our class Form::Field::Text is Field {
 		else {
 			$justify-function = &Form::TextFormatting::full-justify;
 		}
-		# RAKUDOBUG: .=map: { } doesn't seem to parse, but .map: { } does
-		@lines.=map({ $justify-function($_, $.width, ' ') });
+		@lines.=map: { $justify-function($_, $.width, ' ') };
 
 		return @lines;
 	}
 }
 
-our class Form::Field::Numeric is Field {
+our class Form::Field::Numeric is Form::Field::Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
-    multi method format(Real $data)
+    multi method format($data)
 	{
-		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts($data);
+		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts(+$data);
 		$ints = Form::TextFormatting::right-justify(~$ints, $.ints-width);
 		$fractions = Form::TextFormatting::left-justify(~$fractions, $.fracs-width);
 		return [ $ints ~ '.' ~ $fractions ];
 	}
 }
 
-our class Form::Field::Verbatim is Field {
+our class Form::Field::Verbatim is Form::Field::Field {
 	multi method format(Str $data) {
 		my @lines = $data.split("\n");
 		$.block or @lines = @lines[^1];

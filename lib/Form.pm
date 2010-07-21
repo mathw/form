@@ -14,11 +14,10 @@ sub form(*@args is Scalar --> Str) is export {
 	while @args.elems {
 		my $format = @args.shift;
 		my $f = Form::Grammar.parse($format, :actions($actions));
-		my @fields = $f.ast;
-		@fields or die "form: error: argument '$format' is not a valid format string";
-		my $nonliteral-field-count = @fields.grep({!($_ ~~ Str)}).elems;
+		$f or die "form: error: argument '$format' is not a valid format string";
+		my $nonliteral-field-count = $f.ast.grep( { $_ ~~ Form::Field::Field } ).elems;
 		if @args.elems < $nonliteral-field-count {
-			die "Insufficient number of data arguments ({@args.elems}) provided for format template '$format'";
+			die "Insufficient number of data arguments ({@args.elems}) provided for format template '$format' which requires $nonliteral-field-count";
 		}
 
 		my @data;
@@ -28,23 +27,25 @@ sub form(*@args is Scalar --> Str) is export {
 
 		my @formatted;
 
-		for @fields {
+		for @($f.ast) {
 			when Str {
 				@formatted.push([$_]);
 			}
-			when Field {
+			when Form::Field::Field {
 				@formatted.push([.format(@data.shift)]);
 			}
 		}
 
 		my $most-lines = ([max] @formatted.map: *.elems);
-		for @fields Z @formatted -> $field, $flines is rw {
-			if $flines.elems < $most-lines {
-				if $field ~~ Field {
-					$flines = $field.align($flines, $most-lines);
+		# RAKUDO: used to use $flines is rw and just overwrite in place that way
+		# But it doesn't seem to work at the moment
+		for @($f.ast) Z (0..*) -> $field, $index {
+			if @formatted[$index].elems < $most-lines {
+				if $field ~~ Form::Field::Field {
+					@formatted[$index] = $field.align(@formatted[$index], $most-lines);
 				}
 				elsif $field ~~ Str {
-					$flines = $field xx $most-lines;
+					@formatted[$index] = $field xx $most-lines;
 				}
 			}
 		}

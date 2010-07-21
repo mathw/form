@@ -54,7 +54,7 @@ ok(form(
 my @nums = (4.5, 5.6, 6.78, 9.101);
 ok(
 	form(
-		'{>>.<<}', \@nums
+		'{>>.<<}', [@nums]
 	)
 	eq
 	"  4.5  \n  5.6  \n  6.78 \n  9.101\n",
@@ -66,7 +66,7 @@ my @strings = <one two three four>;
 ok(
 	form(
 		'{>>>>>>}',
-		\@strings
+		[@strings]
 	)
 	eq
 	"     one\n     two\n   three\n    four\n",
@@ -78,7 +78,7 @@ ok(
 ok(
 	form(
 		'{>>>>>>}|{>.<<}',
-		\@strings, \@nums
+		[@strings], [@nums]
 	)
 	eq
 	"     one| 4.5  \n     two| 5.6  \n   three| 6.78 \n    four| 9.101\n",
