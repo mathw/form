@@ -21,25 +21,21 @@ our class Form::Field::Field {
 		return @output;
 	}
 
-	method align(@lines is copy, $height) {
+	method align(@lines, $height) {
 		if @lines.elems < $height {
 			my @extra = (' ' x $.width) xx ($height - @lines.elems);
 			given $.alignment {
 				when Alignment::top {
-					@lines.push: @extra;
-					return @lines;
+					return (@lines, @extra);
 				}
 				when Alignment::bottom {
-					@lines.unshift: @extra;
-					return @lines;
+					return (@extra, @lines);
 				}
 				default {
 					my @top = (' ' x $.width) xx (@extra.elems div 2);
 					my @bottom = @top;
 					@extra.elems % 2 and @bottom.push(' ' x $.width);
-					@lines.shift: @top;
-					@lines.push: @bottom;
-					return @lines;
+					return (@top, @lines, @bottom);
 				}
 			}
 		}
@@ -85,7 +81,7 @@ our class Form::Field::Numeric is Form::Field::Field {
 	has Num $.ints-width;
 	has Num $.fracs-width;
 
-    multi method format($data)
+    multi method format(Real $data)
 	{
 		my ($ints, $fractions) = Form::NumberFormatting::obtain-number-parts(+$data);
 		$ints = Form::TextFormatting::right-justify(~$ints, $.ints-width);
