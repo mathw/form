@@ -2,11 +2,12 @@ An implementation of Perl 6's Form module, as described by Exegesis 7 and Damian
 
 This is a WORK IN PROGRESS and most likely doesn't work at any given time.
 
-Note that Form.pm builds perfectly with Rakudo master but does not pass all tests due to a bug in grammar backtracking in NQP-rx. It is hoped that this will be fixed soon. (24/June/2010)
+Current status: All bar one test files currently pass with Rakudo master. The plan is to have Form operational with all current functionality in time for inclusion in Rakudo *, after which new functionality will be added according to the TODO list.
 
 TODO
 ====
 
+* DOCUMENTATION
 * Data specified as lists
 * Numeric fields with decimal separator and justification
 * Numeric fields with thousands separators and justification
