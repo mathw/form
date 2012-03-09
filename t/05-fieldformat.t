@@ -5,6 +5,7 @@ use Test;
 plan 22;
 
 use Form::Field;
+use Form::Types;
 
 my $right-text-field = Form::Field::Text.new(
     :block(Bool::False),

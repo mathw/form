@@ -2,6 +2,7 @@ module Form::Field;
 
 use Form::TextFormatting;
 use Form::NumberFormatting;
+use Form::Types;
 
 # RAKUDO: Field is now a class, because overriding multis doesn't
 # work correctly from roles
@@ -78,8 +79,8 @@ our class Form::Field::Text is Form::Field::Field {
 }
 
 our class Form::Field::Numeric is Form::Field::Field {
-	has Num $.ints-width;
-	has Num $.fracs-width;
+	has Int $.ints-width;
+	has Int $.fracs-width;
 
     multi method format(Real $data)
 	{

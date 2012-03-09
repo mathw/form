@@ -1,6 +1,5 @@
 module Form::TextFormatting;
 
-
 =begin pod
 
 =head1 Form::TextFormatting
@@ -8,9 +7,6 @@ module Form::TextFormatting;
 Utility functions for formatting text in Form.pm.
 
 =end pod
-
-enum Justify <left right centre full>;
-enum Alignment <top middle bottom>;
 
 sub chop-first-word(Str $source is rw) returns Str {
 	if $source ~~ / ^^ (\S+) \s* (.*) $$ / {
@@ -63,7 +59,9 @@ our sub unjustified-wrap(Str $text, Int $width) {
 	my $rem = $text;
 	my $line;
 
-	my @array = gather loop {
+	# RAKUDO: bug in headless loop with gather as of 2012-03-09 requires
+	# the use of while True instead. This should say 'gather loop {'
+	my @array = gather { while True {
 		($line, $rem) = fit-in-width($rem, $width);
 		# we have to force a copy here or take will end up with the same value
 		# every single time! This might be a rakudo issue, or a spec issue
@@ -71,7 +69,7 @@ our sub unjustified-wrap(Str $text, Int $width) {
 		my $t = $line;
 		take $t;
 		$rem or last;
-	};
+	} };
 
 	return @array;
 }
@@ -109,7 +107,7 @@ our sub centre-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 	return $line.substr(0, $width);
 }
 
-our sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
+our sub full-justify(Str $line, Int $width, Str $space = ' ') {
 	# TODO need a justify algorithm
 	# for now, do something entirely unsatisfactory
 	if $line.chars < $width {
@@ -126,17 +124,14 @@ our sub full-justify(Str $line, Int $width, Str $space = ' ') returns Str {
 		{
 			@spaces[$act-space++] ~= $space;
 
-			# RAKUDO no reduce meta-op yet
-			#$spaces-width = [+] @spaces.map({ .chars });
-			$spaces-width = @spaces.map({.chars}).reduce(&infix:<+>);
+			$spaces-width = [+] @spaces.map({ .chars });
 
 			$act-space >= @spaces.elems and $act-space = 0;
 		}
 
 		@spaces.push('');
 
-		#return [~] (@words Z @spaces);
-		return (@words Z @spaces).reduce: &infix:<~>;
+		return (@words Z @spaces).join;
 	}
 
 	return $line.substr(0, $width);

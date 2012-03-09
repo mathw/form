@@ -5,7 +5,7 @@ use Form::Grammar;
 use Form::Actions;
 use Form::Field;
 
-sub form(*@args is Scalar --> Str) is export {
+sub form(*@args --> Str) is export {
 	my @lines;
 	my $result = '';
 

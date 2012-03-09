@@ -2,11 +2,12 @@
 use v6;
 use Test;
 
-plan 32;
+plan 38;
 
 use Form::Grammar;
 use Form::Actions;
 use Form::Field;
+use Form::Types;
 
 my $actions = Form::Actions.new;
 ok($actions, "Form::Actions constructs");
@@ -21,9 +22,8 @@ ok($field ~~ Form::Field::Text, "Parse returned Form::Field::Textresult object (
 
 ok($field.block, "Parsed left block field block state is true");
 ok($field.width == 5, "Parsed left block field width is correct");
-# RAKUDO: enable these after Rakudo lets us talk to enums in another module
-#ok($field.alignment == Form::TextFormatting::Alignment::top, "Parsed left block field alignment is top");
-#ok($field.justify == Form::TextFormatting::Justify::left, "Parsed left block field justification is left");
+ok($field.alignment == Alignment::top, "Parsed left block field alignment is top");
+ok($field.justify == Justify::left, "Parsed left block field justification is left");
 
 my $r-result = Form::Grammar.parse('{>>>>>>}', :actions($actions));
 ok($r-result, "Parse right line field with actions succeeds");
@@ -32,22 +32,20 @@ my $r-field = $r-result.ast[0];
 ok($r-field ~~ Form::Field::Text, "Parse returned a Form::Field::Textresult object");
 ok(!$r-field.block, "Parsed right line field object is not a block");
 ok($r-field.width == 8, "Parsed right line field width is correct");
-#ok($field.alignment == Form::TextFormatting::Alignment::top, "Parsed right line field alignment is top");
-#ok($field.justify == Form::TextFormatting::Justify::right, "Parsed right line field justification is left");
+ok($r-field.alignment == Alignment::top, "Parsed right line field alignment is top");
+ok($r-field.justify == Justify::right, "Parsed right line field justification is right ({$field.justify})");
 
 $r-result = Form::Grammar.parse('{><}', :actions($actions));
 ok($r-result, "Parse centred line field with actions succeeds");
 ok($r-result.ast[0] ~~ Form::Field::Text, "Parse centred line field result object is Text");
 ok($r-result.ast[0].width == 4, "Parsed centred line field has correct width");
-# RAKUDO: enable when we can use enums from another module
-#ok($r-result.ast[0].justify == Form::TextFormatting::Justify::centre, "Parsed centred line field justification is centre");
+ok($r-result.ast[0].justify == Justify::centre, "Parsed centred line field justification is centre");
 
 $r-result = Form::Grammar.parse('{[[]}', :actions($actions));
 ok($r-result, "Parse justified line field with actions succeeds");
 ok($r-result.ast[0] ~~ Form::Field::Text, "Parse justified line field result object is Text");
 ok($r-result.ast[0].width == 5, "Parsed justified line field has correct width");
-# RAKUDO: enable when we can use enums from another module
-#ok($r-result.ast[0].justify == Form::TextFormatting::Justify::full, "Parsed centred line field justification is centre");
+ok($r-result.ast[0].justify == Justify::full, "Parsed justified line field justification is full");
 
 
 

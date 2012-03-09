@@ -1,11 +1,10 @@
 use Form::Field;
+use Form::Types;
 
 =begin pod
 =head3 FormActions
 
 Class containing action methods to be associated with Form grammar defined in Form::Grammar.
-
-TODO: Convert from {*} #= key to the New Way (this is no longer in the spec)
 
 =end pod
 
