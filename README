@@ -2,7 +2,7 @@ An implementation of Perl 6's Form module, as described by Exegesis 7 and Damian
 
 This is a WORK IN PROGRESS and most likely doesn't work at any given time.
 
-Current status: All bar one test files currently pass with Rakudo master. The plan is to have Form operational with all current functionality in time for inclusion in Rakudo *, after which new functionality will be added according to the TODO list.
+2012-03-09 Current status: runs and passes all tests with Rakudo nom
 
 TODO
 ====
