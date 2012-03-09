@@ -59,17 +59,14 @@ our sub unjustified-wrap(Str $text, Int $width) {
 	my $rem = $text;
 	my $line;
 
-	# RAKUDO: bug in headless loop with gather as of 2012-03-09 requires
-	# the use of while True instead. This should say 'gather loop {'
-	my @array = gather { while True {
+	my @array = gather while $rem {
 		($line, $rem) = fit-in-width($rem, $width);
 		# we have to force a copy here or take will end up with the same value
 		# every single time! This might be a rakudo issue, or a spec issue
 		# or just expected behaviour
 		my $t = $line;
 		take $t;
-		$rem or last;
-	} };
+	};
 
 	return @array;
 }
