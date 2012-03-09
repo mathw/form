@@ -19,12 +19,15 @@ TODO
 BUILDING AND RUNNING
 ====================
 
-You will need ufo in order to build Form. Install it using proto, or see http://github.com/masak/ufo. You will also need a suitable Perl 6 implementation, which at the time of writing is probably Rakudo Perl.
+You will need ufo in order to build Form. Install it using panda, or see http://github.com/masak/ufo. You will also need a suitable Perl 6 implementation, which at the time of writing is probably Rakudo Perl.
 
 Once you have ufo installed, just run:
 
 $ ufo
 $ make
 $ make test
+
+Since Form is a library, 'running' is something that should not really have ever been mentioned.
+
 
 Licensed under the Artistic Licence 2.0
