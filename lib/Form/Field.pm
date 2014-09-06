@@ -27,16 +27,16 @@ our class Form::Field::Field {
 			my @extra = (' ' x $.width) xx ($height - @lines.elems);
 			given $.alignment {
 				when Alignment::top {
-					return (@lines, @extra);
+					return (@lines, @extra).flat;
 				}
 				when Alignment::bottom {
-					return (@extra, @lines);
+					return (@extra, @lines).flat;
 				}
 				default {
 					my @top = (' ' x $.width) xx (@extra.elems div 2);
 					my @bottom = @top;
 					@extra.elems % 2 and @bottom.push(' ' x $.width);
-					return (@top, @lines, @bottom);
+					return (@top, @lines, @bottom).flat;
 				}
 			}
 		}

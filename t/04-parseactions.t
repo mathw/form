@@ -18,7 +18,7 @@ ok($result, "Parse left block field with actions succeeds");
 
 my $fields = $result.ast;
 my $field = $fields[0];
-ok($field ~~ Form::Field::Text, "Parse returned Form::Field::Textresult object (it was a {$field.WHAT})");
+ok($field ~~ Form::Field::Text, "Parse returned Form::Field::Textresult object (it was a {$field.^name})");
 
 ok($field.block, "Parsed left block field block state is true");
 ok($field.width == 5, "Parsed left block field width is correct");
@@ -57,7 +57,7 @@ ok($mixed-results.ast.elems == 5, "Mixed field parse had the correct number of e
 
 my $c = 1;
 for $mixed-results.ast Z (Str, Form::Field::Text, Str, Form::Field::Text, Form::Field::Text) -> $r, $e {
-	ok($r ~~ $e, "Mixed field section {$c++} has type $e ({$r.WHAT})");
+	ok($r ~~ $e, "Mixed field section {$c++} has type {$e.^name} ({$r.^name})");
 }
 
 my $v-string = '{\'\'\'}';
